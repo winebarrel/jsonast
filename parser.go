@@ -39,5 +39,6 @@ func ParseJSON(filename string, src []byte) (*JsonValue, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	return v, nil
 }
