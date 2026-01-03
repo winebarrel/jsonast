@@ -1,0 +1,520 @@
+package jsonast_test
+
+import (
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+	"github.com/winebarrel/jsonast"
+)
+
+func TestParseJSON_ParseErr(t *testing.T) {
+	_, err := jsonast.ParseJSON("", []byte(`{`))
+	assert.ErrorContains(t, err, `1:2: unexpected token "<EOF>" (expected "}")`)
+}
+
+func TestParseJSON_LexErr(t *testing.T) {
+	_, err := jsonast.ParseJSON("", []byte(`{"foo:"bar"}`))
+	assert.ErrorContains(t, err, `1:8: invalid character 'b' after object key`)
+}
+
+func TestParseJSON_OK(t *testing.T) {
+	tests := []struct {
+		name     string
+		json     string
+		expected *jsonast.JsonValue
+	}{
+		{
+			name: "int",
+			json: "1",
+			expected: &jsonast.JsonValue{
+				Number: ptr("1"),
+			},
+		},
+		{
+			name: "float",
+			json: "1.1",
+			expected: &jsonast.JsonValue{
+				Number: ptr("1.1"),
+			},
+		},
+		{
+			name: "false",
+			json: "false",
+			expected: &jsonast.JsonValue{
+				False: ptr("false"),
+			},
+		},
+		{
+			name: "null",
+			json: "null",
+			expected: &jsonast.JsonValue{
+				Null: ptr("null"),
+			},
+		},
+		{
+			name: "true",
+			json: "true",
+			expected: &jsonast.JsonValue{
+				True: ptr("true"),
+			},
+		},
+		{
+			name: "string",
+			json: `"hello"`,
+			expected: &jsonast.JsonValue{
+				String: ptr("hello"),
+			},
+		},
+		{
+			name: "true-string",
+			json: `"true"`,
+			expected: &jsonast.JsonValue{
+				String: ptr("true"),
+			},
+		},
+		{
+			name: "false-string",
+			json: `"false"`,
+			expected: &jsonast.JsonValue{
+				String: ptr("false"),
+			},
+		},
+		{
+			name: "empty object",
+			json: "{}",
+			expected: &jsonast.JsonValue{
+				Object: &jsonast.JsonObject{},
+			},
+		},
+		{
+			name: "object",
+			json: `{"str":"s","num":1,"t":true,"f":false,"null":null,"obj":{"str":"s","num":1,"t":true,"f":false,"null":null},"ary":["s",1,true,false,null]}`,
+			expected: &jsonast.JsonValue{
+				Object: &jsonast.JsonObject{
+					Members: []*jsonast.JsonObjectMember{
+						{
+							Key: "str",
+							Value: &jsonast.JsonValue{
+								String: ptr("s"),
+							},
+						},
+						{
+							Key: "num",
+							Value: &jsonast.JsonValue{
+								Number: ptr("1"),
+							},
+						},
+						{
+							Key: "t",
+							Value: &jsonast.JsonValue{
+								True: ptr("true"),
+							},
+						},
+						{
+							Key: "f",
+							Value: &jsonast.JsonValue{
+								False: ptr("false"),
+							},
+						},
+						{
+							Key: "null",
+							Value: &jsonast.JsonValue{
+								Null: ptr("null"),
+							},
+						},
+						{
+							Key: "obj",
+							Value: &jsonast.JsonValue{
+								Object: &jsonast.JsonObject{
+									Members: []*jsonast.JsonObjectMember{
+										{
+											Key: "str",
+											Value: &jsonast.JsonValue{
+												String: ptr("s"),
+											},
+										},
+										{
+											Key: "num",
+											Value: &jsonast.JsonValue{
+												Number: ptr("1"),
+											},
+										},
+										{
+											Key: "t",
+											Value: &jsonast.JsonValue{
+												True: ptr("true"),
+											},
+										},
+										{
+											Key: "f",
+											Value: &jsonast.JsonValue{
+												False: ptr("false"),
+											},
+										},
+										{
+											Key: "null",
+											Value: &jsonast.JsonValue{
+												Null: ptr("null"),
+											},
+										},
+									},
+								},
+							},
+						},
+						{
+							Key: "ary",
+							Value: &jsonast.JsonValue{
+								Array: &jsonast.JsonArray{
+									Elements: []*jsonast.JsonValue{
+										{
+											String: ptr("s"),
+										},
+										{
+											Number: ptr("1"),
+										},
+										{
+											True: ptr("true"),
+										},
+										{
+											False: ptr("false"),
+										},
+										{
+											Null: ptr("null"),
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+		{
+			name: "array in object",
+			json: `{"str":"s","num":1,"t":true,"f":false,"null":null,"ary":[{"str":"s"},{"num":1},{"t":true},{"f":false},{"null":null},[{"str":"s"},{"num":1},{"t":true},{"f":false},{"null":null}]]}`,
+			expected: &jsonast.JsonValue{
+				Object: &jsonast.JsonObject{
+					Members: []*jsonast.JsonObjectMember{
+						{
+							Key: "str",
+							Value: &jsonast.JsonValue{
+								String: ptr("s"),
+							},
+						},
+						{
+							Key: "num",
+							Value: &jsonast.JsonValue{
+								Number: ptr("1"),
+							},
+						},
+						{
+							Key: "t",
+							Value: &jsonast.JsonValue{
+								True: ptr("true"),
+							},
+						},
+						{
+							Key: "f",
+							Value: &jsonast.JsonValue{
+								False: ptr("false"),
+							},
+						},
+						{
+							Key: "null",
+							Value: &jsonast.JsonValue{
+								Null: ptr("null"),
+							},
+						},
+						{
+							Key: "ary",
+							Value: &jsonast.JsonValue{
+								Array: &jsonast.JsonArray{
+									Elements: []*jsonast.JsonValue{
+										{
+											Object: &jsonast.JsonObject{
+												Members: []*jsonast.JsonObjectMember{
+													{
+														Key: "str",
+														Value: &jsonast.JsonValue{
+															String: ptr("s"),
+														},
+													},
+												},
+											},
+										},
+										{
+											Object: &jsonast.JsonObject{
+												Members: []*jsonast.JsonObjectMember{
+													{
+														Key: "num",
+														Value: &jsonast.JsonValue{
+															Number: ptr("1"),
+														},
+													},
+												},
+											},
+										},
+										{
+											Object: &jsonast.JsonObject{
+												Members: []*jsonast.JsonObjectMember{
+													{
+														Key: "t",
+														Value: &jsonast.JsonValue{
+															True: ptr("true"),
+														},
+													},
+												},
+											},
+										},
+										{
+											Object: &jsonast.JsonObject{
+												Members: []*jsonast.JsonObjectMember{
+													{
+														Key: "f",
+														Value: &jsonast.JsonValue{
+															False: ptr("false"),
+														},
+													},
+												},
+											},
+										},
+										{
+											Object: &jsonast.JsonObject{
+												Members: []*jsonast.JsonObjectMember{
+													{
+														Key: "null",
+														Value: &jsonast.JsonValue{
+															Null: ptr("null"),
+														},
+													},
+												},
+											},
+										},
+										{
+											Array: &jsonast.JsonArray{
+												Elements: []*jsonast.JsonValue{
+													{
+														Object: &jsonast.JsonObject{
+															Members: []*jsonast.JsonObjectMember{
+																{
+																	Key: "str",
+																	Value: &jsonast.JsonValue{
+																		String: ptr("s"),
+																	},
+																},
+															},
+														},
+													},
+													{
+														Object: &jsonast.JsonObject{
+															Members: []*jsonast.JsonObjectMember{
+																{
+																	Key: "num",
+																	Value: &jsonast.JsonValue{
+																		Number: ptr("1"),
+																	},
+																},
+															},
+														},
+													},
+													{
+														Object: &jsonast.JsonObject{
+															Members: []*jsonast.JsonObjectMember{
+																{
+																	Key: "t",
+																	Value: &jsonast.JsonValue{
+																		True: ptr("true"),
+																	},
+																},
+															},
+														},
+													},
+													{
+														Object: &jsonast.JsonObject{
+															Members: []*jsonast.JsonObjectMember{
+																{
+																	Key: "f",
+																	Value: &jsonast.JsonValue{
+																		False: ptr("false"),
+																	},
+																},
+															},
+														},
+													},
+													{
+														Object: &jsonast.JsonObject{
+															Members: []*jsonast.JsonObjectMember{
+																{
+																	Key: "null",
+																	Value: &jsonast.JsonValue{
+																		Null: ptr("null"),
+																	},
+																},
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+		{
+			name: "empty array",
+			json: "[]",
+			expected: &jsonast.JsonValue{
+				Array: &jsonast.JsonArray{},
+			},
+		},
+		{
+			name: "object in array",
+			json: `[{"str":"s"},{"num":1},{"t":true},{"f":false},{"null":null},[{"str":"s"},{"num":1},{"t":true},{"f":false},{"null":null}]]`,
+			expected: &jsonast.JsonValue{
+				Array: &jsonast.JsonArray{
+					Elements: []*jsonast.JsonValue{
+						{
+							Object: &jsonast.JsonObject{
+								Members: []*jsonast.JsonObjectMember{
+									{
+										Key: "str",
+										Value: &jsonast.JsonValue{
+											String: ptr("s"),
+										},
+									},
+								},
+							},
+						},
+						{
+							Object: &jsonast.JsonObject{
+								Members: []*jsonast.JsonObjectMember{
+									{
+										Key: "num",
+										Value: &jsonast.JsonValue{
+											Number: ptr("1"),
+										},
+									},
+								},
+							},
+						},
+						{
+							Object: &jsonast.JsonObject{
+								Members: []*jsonast.JsonObjectMember{
+									{
+										Key: "t",
+										Value: &jsonast.JsonValue{
+											True: ptr("true"),
+										},
+									},
+								},
+							},
+						},
+						{
+							Object: &jsonast.JsonObject{
+								Members: []*jsonast.JsonObjectMember{
+									{
+										Key: "f",
+										Value: &jsonast.JsonValue{
+											False: ptr("false"),
+										},
+									},
+								},
+							},
+						},
+						{
+							Object: &jsonast.JsonObject{
+								Members: []*jsonast.JsonObjectMember{
+									{
+										Key: "null",
+										Value: &jsonast.JsonValue{
+											Null: ptr("null"),
+										},
+									},
+								},
+							},
+						},
+						{
+							Array: &jsonast.JsonArray{
+								Elements: []*jsonast.JsonValue{
+									{
+										Object: &jsonast.JsonObject{
+											Members: []*jsonast.JsonObjectMember{
+												{
+													Key: "str",
+													Value: &jsonast.JsonValue{
+														String: ptr("s"),
+													},
+												},
+											},
+										},
+									},
+									{
+										Object: &jsonast.JsonObject{
+											Members: []*jsonast.JsonObjectMember{
+												{
+													Key: "num",
+													Value: &jsonast.JsonValue{
+														Number: ptr("1"),
+													},
+												},
+											},
+										},
+									},
+									{
+										Object: &jsonast.JsonObject{
+											Members: []*jsonast.JsonObjectMember{
+												{
+													Key: "t",
+													Value: &jsonast.JsonValue{
+														True: ptr("true"),
+													},
+												},
+											},
+										},
+									},
+									{
+										Object: &jsonast.JsonObject{
+											Members: []*jsonast.JsonObjectMember{
+												{
+													Key: "f",
+													Value: &jsonast.JsonValue{
+														False: ptr("false"),
+													},
+												},
+											},
+										},
+									},
+									{
+										Object: &jsonast.JsonObject{
+											Members: []*jsonast.JsonObjectMember{
+												{
+													Key: "null",
+													Value: &jsonast.JsonValue{
+														Null: ptr("null"),
+													},
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			v, err := jsonast.ParseJSON("", []byte(tt.json))
+			require.NoError(t, err)
+			assert.Equal(t, tt.expected, v)
+		})
+	}
+}
