@@ -1,5 +1,7 @@
 # jsonast
 
+[![CI](https://github.com/winebarrel/jsonast/actions/workflows/ci.yml/badge.svg)](https://github.com/winebarrel/jsonast/actions/workflows/ci.yml)
+
 jsonast is a library that parses JSON and converts it to AST.
 
 ## Usage
