@@ -5,7 +5,6 @@ go 1.25.5
 require (
 	github.com/alecthomas/participle/v2 v2.1.4
 	github.com/stretchr/testify v1.11.1
-	github.com/winebarrel/json2go/v2 v2.0.3
 )
 
 require (
