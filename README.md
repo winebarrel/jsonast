@@ -36,7 +36,7 @@ func main() {
 	// 						{Number: strptr("3")},
 	// 					},
 	// 				}}},
-	// 				{Key: "zoo", Value: &jsonast.JsonValue{Object: &jsonast.JsonObject{
+	// 				{Key: "baz", Value: &jsonast.JsonValue{Object: &jsonast.JsonObject{
 	// 					Members: []*jsonast.JsonObjectMember{
 	// 						{Key: "hoge", Value: &jsonast.JsonValue{True: strptr("true")}},
 	// 						{Key: "fuga", Value: &jsonast.JsonValue{Null: strptr("null")}},
