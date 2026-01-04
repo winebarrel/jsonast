@@ -536,22 +536,23 @@ func TestParse_OK(t *testing.T) {
 
 func TestIsXXX(t *testing.T) {
 	tests := []struct {
-		name   string
-		False  bool
-		Null   bool
-		True   bool
-		Object bool
-		Array  bool
-		Number bool
-		String bool
+		name      string
+		False     bool
+		Null      bool
+		True      bool
+		Object    bool
+		Array     bool
+		Number    bool
+		String    bool
+		primitive bool
 	}{
-		{name: "IsFalse", False: true},
-		{name: "IsNull", Null: true},
-		{name: "IsTrue", True: true},
+		{name: "IsFalse", False: true, primitive: true},
+		{name: "IsNull", Null: true, primitive: true},
+		{name: "IsTrue", True: true, primitive: true},
 		{name: "IsObject", Object: true},
 		{name: "IsArray", Array: true},
-		{name: "IsNumber", Number: true},
-		{name: "IsString", String: true},
+		{name: "IsNumber", Number: true, primitive: true},
+		{name: "IsString", String: true, primitive: true},
 	}
 
 	for _, tt := range tests {
@@ -586,6 +587,7 @@ func TestIsXXX(t *testing.T) {
 			assert.Equal(t, tt.Array, v.IsArray())
 			assert.Equal(t, tt.Number, v.IsNumber())
 			assert.Equal(t, tt.String, v.IsString())
+			assert.Equal(t, tt.primitive, v.IsPrimitive())
 		})
 	}
 }

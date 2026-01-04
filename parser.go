@@ -76,6 +76,14 @@ func (v *JsonValue) IsString() bool {
 	return v.String != nil
 }
 
+func (v *JsonValue) IsPrimitive() bool {
+	return v.False != nil ||
+		v.Null != nil ||
+		v.True != nil ||
+		v.Number != nil ||
+		v.String != nil
+}
+
 func (v *JsonArray) IsObjectArray() bool {
 	if len(v.Elements) == 0 {
 		return false
