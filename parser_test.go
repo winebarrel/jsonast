@@ -695,16 +695,16 @@ func TestValue(t *testing.T) {
 		Array    bool
 		Number   bool
 		String   bool
-		exepcted any
+		expected any
 	}{
-		{name: "ValueOfFalse", False: true, exepcted: ptr(jsonast.JsonFalse(""))},
-		{name: "ValueOfNull", Null: true, exepcted: ptr(jsonast.JsonNull(""))},
-		{name: "ValueOfTrue", True: true, exepcted: ptr(jsonast.JsonTrue(""))},
-		{name: "ValueOfObject", Object: true, exepcted: &jsonast.JsonObject{}},
-		{name: "ValueOfArray", Array: true, exepcted: &jsonast.JsonArray{}},
-		{name: "ValueOfNumber", Number: true, exepcted: ptr(jsonast.JsonNumber(""))},
-		{name: "ValueOfString", String: true, exepcted: ptr(jsonast.JsonString(""))},
-		{name: "ValueOfNone", exepcted: nil},
+		{name: "ValueOfFalse", False: true, expected: ptr(jsonast.JsonFalse(""))},
+		{name: "ValueOfNull", Null: true, expected: ptr(jsonast.JsonNull(""))},
+		{name: "ValueOfTrue", True: true, expected: ptr(jsonast.JsonTrue(""))},
+		{name: "ValueOfObject", Object: true, expected: &jsonast.JsonObject{}},
+		{name: "ValueOfArray", Array: true, expected: &jsonast.JsonArray{}},
+		{name: "ValueOfNumber", Number: true, expected: ptr(jsonast.JsonNumber(""))},
+		{name: "ValueOfString", String: true, expected: ptr(jsonast.JsonString(""))},
+		{name: "ValueOfNil", expected: nil},
 	}
 
 	for _, tt := range tests {
@@ -732,7 +732,7 @@ func TestValue(t *testing.T) {
 				v.String = ptr(jsonast.JsonString(""))
 			}
 
-			assert.Equal(t, tt.exepcted, v.Value())
+			assert.Equal(t, tt.expected, v.Value())
 		})
 	}
 }
