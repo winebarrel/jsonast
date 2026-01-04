@@ -69,7 +69,7 @@ func (v *JsonValue) ObjectArray() []*JsonObject {
 		return nil
 	}
 
-	objs := []*JsonObject{}
+	objs := make([]*JsonObject, 0, len(v.Array.Elements))
 
 	for _, e := range v.Array.Elements {
 		objs = append(objs, e.Object)
