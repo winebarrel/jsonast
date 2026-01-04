@@ -22,6 +22,34 @@ type JsonValue struct {
 	String *string     `parser:"@string"`
 }
 
+func (v *JsonValue) IsFalse() bool {
+	return v.False != nil
+}
+
+func (v *JsonValue) IsNull() bool {
+	return v.Null != nil
+}
+
+func (v *JsonValue) IsTrue() bool {
+	return v.True != nil
+}
+
+func (v *JsonValue) IsObject() bool {
+	return v.Object != nil
+}
+
+func (v *JsonValue) IsArray() bool {
+	return v.Array != nil
+}
+
+func (v *JsonValue) IsNumber() bool {
+	return v.Number != nil
+}
+
+func (v *JsonValue) IsString() bool {
+	return v.String != nil
+}
+
 type JsonObject struct {
 	Members []*JsonObjectMember `parser:"'{' @@* '}'"`
 }
