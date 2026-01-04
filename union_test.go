@@ -165,7 +165,7 @@ func TestArrayUnionType(t *testing.T) {
 			expected: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{}}},
 		},
 		{
-			name: "array <=> composit array",
+			name: "array <=> composite array",
 			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
 				{String: pstr("s")},
 				{Number: pnum("1")},
