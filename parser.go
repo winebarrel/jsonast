@@ -107,6 +107,10 @@ type JsonArray struct {
 	Elements []*JsonValue `parser:"'[' @@* ']'"`
 }
 
+func (v *JsonArray) Len() int {
+	return len(v.Elements)
+}
+
 func ParseBytes(filename string, src []byte) (*JsonValue, error) {
 	v, err := jsonParser.ParseBytes(filename, src)
 
