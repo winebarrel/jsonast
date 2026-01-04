@@ -12,14 +12,20 @@ var (
 	)
 )
 
+type JsonFalse string
+type JsonNull string
+type JsonTrue string
+type JsonNumber string
+type JsonString string
+
 type JsonValue struct {
-	False  *string     `parser:"@false |"`
-	Null   *string     `parser:"@null |"`
-	True   *string     `parser:"@true |"`
+	False  *JsonFalse  `parser:"@false |"`
+	Null   *JsonNull   `parser:"@null |"`
+	True   *JsonTrue   `parser:"@true |"`
 	Object *JsonObject `parser:"@@ |"`
 	Array  *JsonArray  `parser:"@@ |"`
-	Number *string     `parser:"@number |"`
-	String *string     `parser:"@string"`
+	Number *JsonNumber `parser:"@number |"`
+	String *JsonString `parser:"@string"`
 }
 
 func (v *JsonValue) IsFalse() bool {
