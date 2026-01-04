@@ -10,24 +10,24 @@ import (
 )
 
 func TestParse_EmptyString(t *testing.T) {
-	_, err := jsonast.ParseBytes("", []byte(""))
-	assert.ErrorContains(t, err, `1:1: unexpected token "<EOF>"`)
-	_, err = jsonast.Parse("", strings.NewReader(""))
-	assert.ErrorContains(t, err, `1:1: unexpected token "<EOF>"`)
+	_, err := jsonast.ParseBytes("<filename>", []byte(""))
+	assert.ErrorContains(t, err, `<filename>:1:1: unexpected token "<EOF>"`)
+	_, err = jsonast.Parse("<filename>", strings.NewReader(""))
+	assert.ErrorContains(t, err, `<filename>:1:1: unexpected token "<EOF>"`)
 }
 
 func TestParse_ParseErr(t *testing.T) {
-	_, err := jsonast.ParseBytes("", []byte(`{`))
-	assert.ErrorContains(t, err, `1:2: unexpected token "<EOF>" (expected "}")`)
-	_, err = jsonast.Parse("", strings.NewReader(`{`))
-	assert.ErrorContains(t, err, `1:2: unexpected token "<EOF>" (expected "}")`)
+	_, err := jsonast.ParseBytes("<filename>", []byte(`{`))
+	assert.ErrorContains(t, err, `<filename>:1:2: unexpected token "<EOF>" (expected "}")`)
+	_, err = jsonast.Parse("<filename>", strings.NewReader(`{`))
+	assert.ErrorContains(t, err, `<filename>:1:2: unexpected token "<EOF>" (expected "}")`)
 }
 
 func TestParse_LexErr(t *testing.T) {
-	_, err := jsonast.ParseBytes("", []byte(`{"foo:"bar"}`))
-	assert.ErrorContains(t, err, `1:8: invalid character 'b' after object key`)
-	_, err = jsonast.Parse("", strings.NewReader(`{"foo:"bar"}`))
-	assert.ErrorContains(t, err, `1:8: invalid character 'b' after object key`)
+	_, err := jsonast.ParseBytes("<filename>", []byte(`{"foo:"bar"}`))
+	assert.ErrorContains(t, err, `<filename>:1:8: invalid character 'b' after object key`)
+	_, err = jsonast.Parse("<filename>", strings.NewReader(`{"foo:"bar"}`))
+	assert.ErrorContains(t, err, `<filename>:1:8: invalid character 'b' after object key`)
 }
 
 func TestParse_OK(t *testing.T) {
