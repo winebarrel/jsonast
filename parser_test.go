@@ -681,6 +681,6 @@ func TestArrayLen(t *testing.T) {
 			elems = append(elems, &jsonast.JsonValue{String: &s})
 		}
 		v := &jsonast.JsonArray{Elements: elems}
-		assert.Equal(t, v.Len(), tt.expected)
+		assert.Equal(t, tt.expected, v.Len())
 	}
 }
