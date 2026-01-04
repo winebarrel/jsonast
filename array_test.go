@@ -29,7 +29,7 @@ func TestArrayLen(t *testing.T) {
 	for _, tt := range tests {
 		elems := []*jsonast.JsonValue{}
 		for _, s := range tt.values {
-			elems = append(elems, &jsonast.JsonValue{String: ptr(jsonast.JsonString(s))})
+			elems = append(elems, &jsonast.JsonValue{String: pstr(s)})
 		}
 		v := &jsonast.JsonArray{Elements: elems}
 		assert.Equal(t, tt.expected, v.Len())
@@ -42,7 +42,7 @@ func TestArrayIsFalseArray(t *testing.T) {
 		expected bool
 	}{
 		{
-			values:   []*jsonast.JsonValue{{String: ptr(jsonast.JsonString(""))}, {String: ptr(jsonast.JsonString(""))}},
+			values:   []*jsonast.JsonValue{{String: pstr("")}, {String: pstr("")}},
 			expected: false,
 		},
 		{
@@ -50,15 +50,15 @@ func TestArrayIsFalseArray(t *testing.T) {
 			expected: false,
 		},
 		{
-			values:   []*jsonast.JsonValue{{False: ptr(jsonast.JsonFalse(""))}, {Array: &jsonast.JsonArray{}}},
+			values:   []*jsonast.JsonValue{{False: pfalse("")}, {Array: &jsonast.JsonArray{}}},
 			expected: false,
 		},
 		{
-			values:   []*jsonast.JsonValue{{False: ptr(jsonast.JsonFalse(""))}},
+			values:   []*jsonast.JsonValue{{False: pfalse("")}},
 			expected: true,
 		},
 		{
-			values:   []*jsonast.JsonValue{{False: ptr(jsonast.JsonFalse(""))}, {False: ptr(jsonast.JsonFalse(""))}},
+			values:   []*jsonast.JsonValue{{False: pfalse("")}, {False: pfalse("")}},
 			expected: true,
 		},
 	}
@@ -75,7 +75,7 @@ func TestArrayFalseArray(t *testing.T) {
 		expected []*jsonast.JsonFalse
 	}{
 		{
-			values:   []*jsonast.JsonValue{{String: ptr(jsonast.JsonString(""))}, {String: ptr(jsonast.JsonString(""))}},
+			values:   []*jsonast.JsonValue{{String: pstr("")}, {String: pstr("")}},
 			expected: nil,
 		},
 		{
@@ -83,16 +83,16 @@ func TestArrayFalseArray(t *testing.T) {
 			expected: nil,
 		},
 		{
-			values:   []*jsonast.JsonValue{{False: ptr(jsonast.JsonFalse(""))}, {Array: &jsonast.JsonArray{}}},
+			values:   []*jsonast.JsonValue{{False: pfalse("")}, {Array: &jsonast.JsonArray{}}},
 			expected: nil,
 		},
 		{
-			values:   []*jsonast.JsonValue{{False: ptr(jsonast.JsonFalse(""))}},
-			expected: []*jsonast.JsonFalse{ptr(jsonast.JsonFalse(""))},
+			values:   []*jsonast.JsonValue{{False: pfalse("")}},
+			expected: []*jsonast.JsonFalse{pfalse("")},
 		},
 		{
-			values:   []*jsonast.JsonValue{{False: ptr(jsonast.JsonFalse(""))}, {False: ptr(jsonast.JsonFalse(""))}},
-			expected: []*jsonast.JsonFalse{ptr(jsonast.JsonFalse("")), ptr(jsonast.JsonFalse(""))},
+			values:   []*jsonast.JsonValue{{False: pfalse("")}, {False: pfalse("")}},
+			expected: []*jsonast.JsonFalse{pfalse(""), pfalse("")},
 		},
 	}
 
@@ -108,7 +108,7 @@ func TestArrayIsNullArray(t *testing.T) {
 		expected bool
 	}{
 		{
-			values:   []*jsonast.JsonValue{{String: ptr(jsonast.JsonString(""))}, {String: ptr(jsonast.JsonString(""))}},
+			values:   []*jsonast.JsonValue{{String: pstr("")}, {String: pstr("")}},
 			expected: false,
 		},
 		{
@@ -116,15 +116,15 @@ func TestArrayIsNullArray(t *testing.T) {
 			expected: false,
 		},
 		{
-			values:   []*jsonast.JsonValue{{Null: ptr(jsonast.JsonNull(""))}, {Array: &jsonast.JsonArray{}}},
+			values:   []*jsonast.JsonValue{{Null: pnull("")}, {Array: &jsonast.JsonArray{}}},
 			expected: false,
 		},
 		{
-			values:   []*jsonast.JsonValue{{Null: ptr(jsonast.JsonNull(""))}},
+			values:   []*jsonast.JsonValue{{Null: pnull("")}},
 			expected: true,
 		},
 		{
-			values:   []*jsonast.JsonValue{{Null: ptr(jsonast.JsonNull(""))}, {Null: ptr(jsonast.JsonNull(""))}},
+			values:   []*jsonast.JsonValue{{Null: pnull("")}, {Null: pnull("")}},
 			expected: true,
 		},
 	}
@@ -141,7 +141,7 @@ func TestArrayNullArray(t *testing.T) {
 		expected []*jsonast.JsonNull
 	}{
 		{
-			values:   []*jsonast.JsonValue{{String: ptr(jsonast.JsonString(""))}, {String: ptr(jsonast.JsonString(""))}},
+			values:   []*jsonast.JsonValue{{String: pstr("")}, {String: pstr("")}},
 			expected: nil,
 		},
 		{
@@ -149,16 +149,16 @@ func TestArrayNullArray(t *testing.T) {
 			expected: nil,
 		},
 		{
-			values:   []*jsonast.JsonValue{{Null: ptr(jsonast.JsonNull(""))}, {Array: &jsonast.JsonArray{}}},
+			values:   []*jsonast.JsonValue{{Null: pnull("")}, {Array: &jsonast.JsonArray{}}},
 			expected: nil,
 		},
 		{
-			values:   []*jsonast.JsonValue{{Null: ptr(jsonast.JsonNull(""))}},
-			expected: []*jsonast.JsonNull{ptr(jsonast.JsonNull(""))},
+			values:   []*jsonast.JsonValue{{Null: pnull("")}},
+			expected: []*jsonast.JsonNull{pnull("")},
 		},
 		{
-			values:   []*jsonast.JsonValue{{Null: ptr(jsonast.JsonNull(""))}, {Null: ptr(jsonast.JsonNull(""))}},
-			expected: []*jsonast.JsonNull{ptr(jsonast.JsonNull("")), ptr(jsonast.JsonNull(""))},
+			values:   []*jsonast.JsonValue{{Null: pnull("")}, {Null: pnull("")}},
+			expected: []*jsonast.JsonNull{pnull(""), pnull("")},
 		},
 	}
 
@@ -173,7 +173,7 @@ func TestArrayIsTrueArray(t *testing.T) {
 		expected bool
 	}{
 		{
-			values:   []*jsonast.JsonValue{{String: ptr(jsonast.JsonString(""))}, {String: ptr(jsonast.JsonString(""))}},
+			values:   []*jsonast.JsonValue{{String: pstr("")}, {String: pstr("")}},
 			expected: false,
 		},
 		{
@@ -181,15 +181,15 @@ func TestArrayIsTrueArray(t *testing.T) {
 			expected: false,
 		},
 		{
-			values:   []*jsonast.JsonValue{{True: ptr(jsonast.JsonTrue(""))}, {Array: &jsonast.JsonArray{}}},
+			values:   []*jsonast.JsonValue{{True: ptrue("")}, {Array: &jsonast.JsonArray{}}},
 			expected: false,
 		},
 		{
-			values:   []*jsonast.JsonValue{{True: ptr(jsonast.JsonTrue(""))}},
+			values:   []*jsonast.JsonValue{{True: ptrue("")}},
 			expected: true,
 		},
 		{
-			values:   []*jsonast.JsonValue{{True: ptr(jsonast.JsonTrue(""))}, {True: ptr(jsonast.JsonTrue(""))}},
+			values:   []*jsonast.JsonValue{{True: ptrue("")}, {True: ptrue("")}},
 			expected: true,
 		},
 	}
@@ -206,7 +206,7 @@ func TestArrayTrueArray(t *testing.T) {
 		expected []*jsonast.JsonTrue
 	}{
 		{
-			values:   []*jsonast.JsonValue{{String: ptr(jsonast.JsonString(""))}, {String: ptr(jsonast.JsonString(""))}},
+			values:   []*jsonast.JsonValue{{String: pstr("")}, {String: pstr("")}},
 			expected: nil,
 		},
 		{
@@ -214,16 +214,16 @@ func TestArrayTrueArray(t *testing.T) {
 			expected: nil,
 		},
 		{
-			values:   []*jsonast.JsonValue{{True: ptr(jsonast.JsonTrue(""))}, {Array: &jsonast.JsonArray{}}},
+			values:   []*jsonast.JsonValue{{True: ptrue("")}, {Array: &jsonast.JsonArray{}}},
 			expected: nil,
 		},
 		{
-			values:   []*jsonast.JsonValue{{True: ptr(jsonast.JsonTrue(""))}},
-			expected: []*jsonast.JsonTrue{ptr(jsonast.JsonTrue(""))},
+			values:   []*jsonast.JsonValue{{True: ptrue("")}},
+			expected: []*jsonast.JsonTrue{ptrue("")},
 		},
 		{
-			values:   []*jsonast.JsonValue{{True: ptr(jsonast.JsonTrue(""))}, {True: ptr(jsonast.JsonTrue(""))}},
-			expected: []*jsonast.JsonTrue{ptr(jsonast.JsonTrue("")), ptr(jsonast.JsonTrue(""))},
+			values:   []*jsonast.JsonValue{{True: ptrue("")}, {True: ptrue("")}},
+			expected: []*jsonast.JsonTrue{ptrue(""), ptrue("")},
 		},
 	}
 
@@ -239,7 +239,7 @@ func TestArrayIsObjectArray(t *testing.T) {
 		expected bool
 	}{
 		{
-			values:   []*jsonast.JsonValue{{String: ptr(jsonast.JsonString(""))}, {String: ptr(jsonast.JsonString(""))}},
+			values:   []*jsonast.JsonValue{{String: pstr("")}, {String: pstr("")}},
 			expected: false,
 		},
 		{
@@ -247,7 +247,7 @@ func TestArrayIsObjectArray(t *testing.T) {
 			expected: false,
 		},
 		{
-			values:   []*jsonast.JsonValue{{String: ptr(jsonast.JsonString(""))}, {Object: &jsonast.JsonObject{}}},
+			values:   []*jsonast.JsonValue{{String: pstr("")}, {Object: &jsonast.JsonObject{}}},
 			expected: false,
 		},
 		{
@@ -272,7 +272,7 @@ func TestArrayObjectArray(t *testing.T) {
 		expected []*jsonast.JsonObject
 	}{
 		{
-			values:   []*jsonast.JsonValue{{String: ptr(jsonast.JsonString(""))}, {String: ptr(jsonast.JsonString(""))}},
+			values:   []*jsonast.JsonValue{{String: pstr("")}, {String: pstr("")}},
 			expected: nil,
 		},
 		{
@@ -280,7 +280,7 @@ func TestArrayObjectArray(t *testing.T) {
 			expected: nil,
 		},
 		{
-			values:   []*jsonast.JsonValue{{String: ptr(jsonast.JsonString(""))}, {Object: &jsonast.JsonObject{}}},
+			values:   []*jsonast.JsonValue{{String: pstr("")}, {Object: &jsonast.JsonObject{}}},
 			expected: nil,
 		},
 		{
@@ -305,7 +305,7 @@ func TestArrayIsArrayArray(t *testing.T) {
 		expected bool
 	}{
 		{
-			values:   []*jsonast.JsonValue{{String: ptr(jsonast.JsonString(""))}, {String: ptr(jsonast.JsonString(""))}},
+			values:   []*jsonast.JsonValue{{String: pstr("")}, {String: pstr("")}},
 			expected: false,
 		},
 		{
@@ -313,7 +313,7 @@ func TestArrayIsArrayArray(t *testing.T) {
 			expected: false,
 		},
 		{
-			values:   []*jsonast.JsonValue{{String: ptr(jsonast.JsonString(""))}, {Array: &jsonast.JsonArray{}}},
+			values:   []*jsonast.JsonValue{{String: pstr("")}, {Array: &jsonast.JsonArray{}}},
 			expected: false,
 		},
 		{
@@ -338,7 +338,7 @@ func TestArrayArrayArray(t *testing.T) {
 		expected []*jsonast.JsonArray
 	}{
 		{
-			values:   []*jsonast.JsonValue{{String: ptr(jsonast.JsonString(""))}, {String: ptr(jsonast.JsonString(""))}},
+			values:   []*jsonast.JsonValue{{String: pstr("")}, {String: pstr("")}},
 			expected: nil,
 		},
 		{
@@ -346,7 +346,7 @@ func TestArrayArrayArray(t *testing.T) {
 			expected: nil,
 		},
 		{
-			values:   []*jsonast.JsonValue{{String: ptr(jsonast.JsonString(""))}, {Array: &jsonast.JsonArray{}}},
+			values:   []*jsonast.JsonValue{{String: pstr("")}, {Array: &jsonast.JsonArray{}}},
 			expected: nil,
 		},
 		{
@@ -371,7 +371,7 @@ func TestArrayIsNumberArray(t *testing.T) {
 		expected bool
 	}{
 		{
-			values:   []*jsonast.JsonValue{{String: ptr(jsonast.JsonString(""))}, {String: ptr(jsonast.JsonString(""))}},
+			values:   []*jsonast.JsonValue{{String: pstr("")}, {String: pstr("")}},
 			expected: false,
 		},
 		{
@@ -379,15 +379,15 @@ func TestArrayIsNumberArray(t *testing.T) {
 			expected: false,
 		},
 		{
-			values:   []*jsonast.JsonValue{{Number: ptr(jsonast.JsonNumber(""))}, {Array: &jsonast.JsonArray{}}},
+			values:   []*jsonast.JsonValue{{Number: pnum("")}, {Array: &jsonast.JsonArray{}}},
 			expected: false,
 		},
 		{
-			values:   []*jsonast.JsonValue{{Number: ptr(jsonast.JsonNumber(""))}},
+			values:   []*jsonast.JsonValue{{Number: pnum("")}},
 			expected: true,
 		},
 		{
-			values:   []*jsonast.JsonValue{{Number: ptr(jsonast.JsonNumber(""))}, {Number: ptr(jsonast.JsonNumber(""))}},
+			values:   []*jsonast.JsonValue{{Number: pnum("")}, {Number: pnum("")}},
 			expected: true,
 		},
 	}
@@ -404,7 +404,7 @@ func TestArrayNumberArray(t *testing.T) {
 		expected []*jsonast.JsonNumber
 	}{
 		{
-			values:   []*jsonast.JsonValue{{String: ptr(jsonast.JsonString(""))}, {String: ptr(jsonast.JsonString(""))}},
+			values:   []*jsonast.JsonValue{{String: pstr("")}, {String: pstr("")}},
 			expected: nil,
 		},
 		{
@@ -412,16 +412,16 @@ func TestArrayNumberArray(t *testing.T) {
 			expected: nil,
 		},
 		{
-			values:   []*jsonast.JsonValue{{Number: ptr(jsonast.JsonNumber(""))}, {Array: &jsonast.JsonArray{}}},
+			values:   []*jsonast.JsonValue{{Number: pnum("")}, {Array: &jsonast.JsonArray{}}},
 			expected: nil,
 		},
 		{
-			values:   []*jsonast.JsonValue{{Number: ptr(jsonast.JsonNumber(""))}},
-			expected: []*jsonast.JsonNumber{ptr(jsonast.JsonNumber(""))},
+			values:   []*jsonast.JsonValue{{Number: pnum("")}},
+			expected: []*jsonast.JsonNumber{pnum("")},
 		},
 		{
-			values:   []*jsonast.JsonValue{{Number: ptr(jsonast.JsonNumber(""))}, {Number: ptr(jsonast.JsonNumber(""))}},
-			expected: []*jsonast.JsonNumber{ptr(jsonast.JsonNumber("")), ptr(jsonast.JsonNumber(""))},
+			values:   []*jsonast.JsonValue{{Number: pnum("")}, {Number: pnum("")}},
+			expected: []*jsonast.JsonNumber{pnum(""), pnum("")},
 		},
 	}
 
@@ -437,7 +437,7 @@ func TestArrayIsStringArray(t *testing.T) {
 		expected bool
 	}{
 		{
-			values:   []*jsonast.JsonValue{{Number: ptr(jsonast.JsonNumber(""))}, {Number: ptr(jsonast.JsonNumber(""))}},
+			values:   []*jsonast.JsonValue{{Number: pnum("")}, {Number: pnum("")}},
 			expected: false,
 		},
 		{
@@ -445,15 +445,15 @@ func TestArrayIsStringArray(t *testing.T) {
 			expected: false,
 		},
 		{
-			values:   []*jsonast.JsonValue{{String: ptr(jsonast.JsonString(""))}, {Array: &jsonast.JsonArray{}}},
+			values:   []*jsonast.JsonValue{{String: pstr("")}, {Array: &jsonast.JsonArray{}}},
 			expected: false,
 		},
 		{
-			values:   []*jsonast.JsonValue{{String: ptr(jsonast.JsonString(""))}},
+			values:   []*jsonast.JsonValue{{String: pstr("")}},
 			expected: true,
 		},
 		{
-			values:   []*jsonast.JsonValue{{String: ptr(jsonast.JsonString(""))}, {String: ptr(jsonast.JsonString(""))}},
+			values:   []*jsonast.JsonValue{{String: pstr("")}, {String: pstr("")}},
 			expected: true,
 		},
 	}
@@ -470,7 +470,7 @@ func TestArrayStringArray(t *testing.T) {
 		expected []*jsonast.JsonString
 	}{
 		{
-			values:   []*jsonast.JsonValue{{Number: ptr(jsonast.JsonNumber(""))}, {Number: ptr(jsonast.JsonNumber(""))}},
+			values:   []*jsonast.JsonValue{{Number: pnum("")}, {Number: pnum("")}},
 			expected: nil,
 		},
 		{
@@ -478,16 +478,16 @@ func TestArrayStringArray(t *testing.T) {
 			expected: nil,
 		},
 		{
-			values:   []*jsonast.JsonValue{{String: ptr(jsonast.JsonString(""))}, {Array: &jsonast.JsonArray{}}},
+			values:   []*jsonast.JsonValue{{String: pstr("")}, {Array: &jsonast.JsonArray{}}},
 			expected: nil,
 		},
 		{
-			values:   []*jsonast.JsonValue{{String: ptr(jsonast.JsonString(""))}},
-			expected: []*jsonast.JsonString{ptr(jsonast.JsonString(""))},
+			values:   []*jsonast.JsonValue{{String: pstr("")}},
+			expected: []*jsonast.JsonString{pstr("")},
 		},
 		{
-			values:   []*jsonast.JsonValue{{String: ptr(jsonast.JsonString(""))}, {String: ptr(jsonast.JsonString(""))}},
-			expected: []*jsonast.JsonString{ptr(jsonast.JsonString("")), ptr(jsonast.JsonString(""))},
+			values:   []*jsonast.JsonValue{{String: pstr("")}, {String: pstr("")}},
+			expected: []*jsonast.JsonString{pstr(""), pstr("")},
 		},
 	}
 
