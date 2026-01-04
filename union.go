@@ -57,12 +57,12 @@ func (v *JsonArray) UnionType(other *JsonValue) *JsonValue {
 		return nullValue
 	}
 
-	if len(v.Elements) == 0 || other != nil && len(other.Array.Elements) == 0 {
-		return &JsonValue{Array: &JsonArray{Elements: []*JsonValue{}}}
-	}
-
 	if other == nil {
 		other = &JsonValue{Array: &JsonArray{Elements: []*JsonValue{}}}
+	}
+
+	if len(v.Elements) == 0 && len(other.Array.Elements) == 0 {
+		return &JsonValue{Array: &JsonArray{Elements: []*JsonValue{}}}
 	}
 
 	elems := make([]*JsonValue, 0, len(v.Elements)+len(other.Array.Elements))

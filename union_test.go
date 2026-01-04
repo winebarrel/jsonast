@@ -446,6 +446,24 @@ func TestArrayUnionType(t *testing.T) {
 			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
 				{String: pstr("s")},
 			}},
+			other: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{}}},
+			expected: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
+				{String: pstr("s")},
+			}}},
+		},
+		{
+			name:  "array <=> empty array 2",
+			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{}},
+			other: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
+				{String: pstr("s")},
+			}}},
+			expected: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
+				{String: pstr("s")},
+			}}},
+		},
+		{
+			name:     "array <=> empty array 3",
+			value:    &jsonast.JsonArray{Elements: []*jsonast.JsonValue{}},
 			other:    &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{}}},
 			expected: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{}}},
 		},
