@@ -28,6 +28,26 @@ type JsonValue struct {
 	String *JsonString `parser:"@string"`
 }
 
+func (v *JsonValue) Value() any {
+	if v.False != nil {
+		return v.False
+	} else if v.Null != nil {
+		return v.Null
+	} else if v.True != nil {
+		return v.True
+	} else if v.Object != nil {
+		return v.Object
+	} else if v.Array != nil {
+		return v.Array
+	} else if v.Number != nil {
+		return v.Number
+	} else if v.String != nil {
+		return v.String
+	} else {
+		return nil
+	}
+}
+
 func (v *JsonValue) IsFalse() bool {
 	return v.False != nil
 }
