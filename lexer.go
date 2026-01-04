@@ -78,7 +78,7 @@ func (l *JsonLexer) Next() (lexer.Token, error) {
 		tok.Type = lexer.EOF
 		return tok, nil
 	} else if err != nil {
-		return tok, fmt.Errorf("%d:%d: %w", tok.Pos.Line, tok.Pos.Column, err)
+		return tok, fmt.Errorf("%s: %w", tok.Pos, err)
 	}
 
 	switch v := rawTok.(type) {
