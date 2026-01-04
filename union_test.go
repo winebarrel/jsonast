@@ -450,11 +450,25 @@ func TestArrayUnionType(t *testing.T) {
 			expected: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{}}},
 		},
 		{
-			name:  "array <=> empty array 2",
-			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{}},
-			other: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
+			name:  "array <=> nil 1",
+			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{{String: pstr("s")}}},
+			other: nil,
+			expected: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
 				{String: pstr("s")},
 			}}},
+		},
+		{
+			name:  "array <=> nil 2",
+			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{{String: pstr("s")}, {Number: pnum("1")}}},
+			other: nil,
+			expected: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
+				{Null: pnull("null")},
+			}}},
+		},
+		{
+			name:     "array <=> nil 3",
+			value:    &jsonast.JsonArray{Elements: []*jsonast.JsonValue{}},
+			other:    nil,
 			expected: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{}}},
 		},
 		{

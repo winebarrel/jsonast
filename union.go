@@ -53,19 +53,21 @@ func (v *JsonString) UnionType(other *JsonValue) *JsonValue {
 }
 
 func (v *JsonArray) UnionType(other *JsonValue) *JsonValue {
-	if !other.IsArray() {
+	if other != nil && !other.IsArray() {
 		return nullValue
 	}
 
-	oary := other.Array
-
-	if len(v.Elements) == 0 || len(oary.Elements) == 0 {
+	if len(v.Elements) == 0 || other != nil && len(other.Array.Elements) == 0 {
 		return &JsonValue{Array: &JsonArray{Elements: []*JsonValue{}}}
 	}
 
-	elems := make([]*JsonValue, 0, len(v.Elements)+len(oary.Elements))
+	if other == nil {
+		other = &JsonValue{Array: &JsonArray{Elements: []*JsonValue{}}}
+	}
+
+	elems := make([]*JsonValue, 0, len(v.Elements)+len(other.Array.Elements))
 	elems = append(elems, v.Elements...)
-	elems = append(elems, oary.Elements...)
+	elems = append(elems, other.Array.Elements...)
 	union := elems[0]
 	elems = elems[1:]
 
