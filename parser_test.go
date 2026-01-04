@@ -704,7 +704,7 @@ func TestValue(t *testing.T) {
 		{name: "ValueOfArray", Array: true, exepcted: &jsonast.JsonArray{}},
 		{name: "ValueOfNumber", Number: true, exepcted: ptr(jsonast.JsonNumber(""))},
 		{name: "ValueOfString", String: true, exepcted: ptr(jsonast.JsonString(""))},
-		{name: "ValueOfString", exepcted: nil},
+		{name: "ValueOfNone", exepcted: nil},
 	}
 
 	for _, tt := range tests {
