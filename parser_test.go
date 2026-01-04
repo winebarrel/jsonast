@@ -684,3 +684,55 @@ func TestArrayLen(t *testing.T) {
 		assert.Equal(t, tt.expected, v.Len())
 	}
 }
+
+func TestValue(t *testing.T) {
+	tests := []struct {
+		name     string
+		False    bool
+		Null     bool
+		True     bool
+		Object   bool
+		Array    bool
+		Number   bool
+		String   bool
+		expected any
+	}{
+		{name: "ValueOfFalse", False: true, expected: ptr(jsonast.JsonFalse(""))},
+		{name: "ValueOfNull", Null: true, expected: ptr(jsonast.JsonNull(""))},
+		{name: "ValueOfTrue", True: true, expected: ptr(jsonast.JsonTrue(""))},
+		{name: "ValueOfObject", Object: true, expected: &jsonast.JsonObject{}},
+		{name: "ValueOfArray", Array: true, expected: &jsonast.JsonArray{}},
+		{name: "ValueOfNumber", Number: true, expected: ptr(jsonast.JsonNumber(""))},
+		{name: "ValueOfString", String: true, expected: ptr(jsonast.JsonString(""))},
+		{name: "ValueOfNil", expected: nil},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			v := &jsonast.JsonValue{}
+			if tt.False {
+				v.False = ptr(jsonast.JsonFalse(""))
+			}
+			if tt.Null {
+				v.Null = ptr(jsonast.JsonNull(""))
+			}
+			if tt.True {
+				v.True = ptr(jsonast.JsonTrue(""))
+			}
+			if tt.Object {
+				v.Object = &jsonast.JsonObject{}
+			}
+			if tt.Array {
+				v.Array = &jsonast.JsonArray{}
+			}
+			if tt.Number {
+				v.Number = ptr(jsonast.JsonNumber(""))
+			}
+			if tt.String {
+				v.String = ptr(jsonast.JsonString(""))
+			}
+
+			assert.Equal(t, tt.expected, v.Value())
+		})
+	}
+}
