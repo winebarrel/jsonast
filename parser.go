@@ -85,7 +85,8 @@ func (v *JsonValue) IsPrimitive() bool {
 }
 
 type JsonObject struct {
-	Members []*JsonObjectMember `parser:"'{' @@* '}'"`
+	Members       []*JsonObjectMember `parser:"'{' @@* '}'"`
+	OmittableKeys map[string]struct{}
 }
 
 type JsonObjectMember struct {

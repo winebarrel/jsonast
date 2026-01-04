@@ -40,56 +40,56 @@ func TestParse_OK(t *testing.T) {
 			name: "int",
 			json: "1",
 			expected: &jsonast.JsonValue{
-				Number: ptr(jsonast.JsonNumber("1")),
+				Number: pnum("1"),
 			},
 		},
 		{
 			name: "float",
 			json: "1.1",
 			expected: &jsonast.JsonValue{
-				Number: ptr(jsonast.JsonNumber("1.1")),
+				Number: pnum("1.1"),
 			},
 		},
 		{
 			name: "false",
 			json: "false",
 			expected: &jsonast.JsonValue{
-				False: ptr(jsonast.JsonFalse("false")),
+				False: pfalse("false"),
 			},
 		},
 		{
 			name: "null",
 			json: "null",
 			expected: &jsonast.JsonValue{
-				Null: ptr(jsonast.JsonNull("null")),
+				Null: pnull("null"),
 			},
 		},
 		{
 			name: "true",
 			json: "true",
 			expected: &jsonast.JsonValue{
-				True: ptr(jsonast.JsonTrue("true")),
+				True: ptrue("true"),
 			},
 		},
 		{
 			name: "string",
 			json: `"hello"`,
 			expected: &jsonast.JsonValue{
-				String: ptr(jsonast.JsonString("hello")),
+				String: pstr("hello"),
 			},
 		},
 		{
 			name: "true-string",
 			json: `"true"`,
 			expected: &jsonast.JsonValue{
-				String: ptr(jsonast.JsonString("true")),
+				String: pstr("true"),
 			},
 		},
 		{
 			name: "false-string",
 			json: `"false"`,
 			expected: &jsonast.JsonValue{
-				String: ptr(jsonast.JsonString("false")),
+				String: pstr("false"),
 			},
 		},
 		{
@@ -108,31 +108,31 @@ func TestParse_OK(t *testing.T) {
 						{
 							Key: "str",
 							Value: &jsonast.JsonValue{
-								String: ptr(jsonast.JsonString("s")),
+								String: pstr("s"),
 							},
 						},
 						{
 							Key: "num",
 							Value: &jsonast.JsonValue{
-								Number: ptr(jsonast.JsonNumber("1")),
+								Number: pnum("1"),
 							},
 						},
 						{
 							Key: "t",
 							Value: &jsonast.JsonValue{
-								True: ptr(jsonast.JsonTrue("true")),
+								True: ptrue("true"),
 							},
 						},
 						{
 							Key: "f",
 							Value: &jsonast.JsonValue{
-								False: ptr(jsonast.JsonFalse("false")),
+								False: pfalse("false"),
 							},
 						},
 						{
 							Key: "null",
 							Value: &jsonast.JsonValue{
-								Null: ptr(jsonast.JsonNull("null")),
+								Null: pnull("null"),
 							},
 						},
 						{
@@ -143,31 +143,31 @@ func TestParse_OK(t *testing.T) {
 										{
 											Key: "str",
 											Value: &jsonast.JsonValue{
-												String: ptr(jsonast.JsonString("s")),
+												String: pstr("s"),
 											},
 										},
 										{
 											Key: "num",
 											Value: &jsonast.JsonValue{
-												Number: ptr(jsonast.JsonNumber("1")),
+												Number: pnum("1"),
 											},
 										},
 										{
 											Key: "t",
 											Value: &jsonast.JsonValue{
-												True: ptr(jsonast.JsonTrue("true")),
+												True: ptrue("true"),
 											},
 										},
 										{
 											Key: "f",
 											Value: &jsonast.JsonValue{
-												False: ptr(jsonast.JsonFalse("false")),
+												False: pfalse("false"),
 											},
 										},
 										{
 											Key: "null",
 											Value: &jsonast.JsonValue{
-												Null: ptr(jsonast.JsonNull("null")),
+												Null: pnull("null"),
 											},
 										},
 									},
@@ -180,19 +180,19 @@ func TestParse_OK(t *testing.T) {
 								Array: &jsonast.JsonArray{
 									Elements: []*jsonast.JsonValue{
 										{
-											String: ptr(jsonast.JsonString("s")),
+											String: pstr("s"),
 										},
 										{
-											Number: ptr(jsonast.JsonNumber("1")),
+											Number: pnum("1"),
 										},
 										{
-											True: ptr(jsonast.JsonTrue("true")),
+											True: ptrue("true"),
 										},
 										{
-											False: ptr(jsonast.JsonFalse("false")),
+											False: pfalse("false"),
 										},
 										{
-											Null: ptr(jsonast.JsonNull("null")),
+											Null: pnull("null"),
 										},
 									},
 								},
@@ -211,31 +211,31 @@ func TestParse_OK(t *testing.T) {
 						{
 							Key: "str",
 							Value: &jsonast.JsonValue{
-								String: ptr(jsonast.JsonString("s")),
+								String: pstr("s"),
 							},
 						},
 						{
 							Key: "num",
 							Value: &jsonast.JsonValue{
-								Number: ptr(jsonast.JsonNumber("1")),
+								Number: pnum("1"),
 							},
 						},
 						{
 							Key: "t",
 							Value: &jsonast.JsonValue{
-								True: ptr(jsonast.JsonTrue("true")),
+								True: ptrue("true"),
 							},
 						},
 						{
 							Key: "f",
 							Value: &jsonast.JsonValue{
-								False: ptr(jsonast.JsonFalse("false")),
+								False: pfalse("false"),
 							},
 						},
 						{
 							Key: "null",
 							Value: &jsonast.JsonValue{
-								Null: ptr(jsonast.JsonNull("null")),
+								Null: pnull("null"),
 							},
 						},
 						{
@@ -249,7 +249,7 @@ func TestParse_OK(t *testing.T) {
 													{
 														Key: "str",
 														Value: &jsonast.JsonValue{
-															String: ptr(jsonast.JsonString("s")),
+															String: pstr("s"),
 														},
 													},
 												},
@@ -261,7 +261,7 @@ func TestParse_OK(t *testing.T) {
 													{
 														Key: "num",
 														Value: &jsonast.JsonValue{
-															Number: ptr(jsonast.JsonNumber("1")),
+															Number: pnum("1"),
 														},
 													},
 												},
@@ -273,7 +273,7 @@ func TestParse_OK(t *testing.T) {
 													{
 														Key: "t",
 														Value: &jsonast.JsonValue{
-															True: ptr(jsonast.JsonTrue("true")),
+															True: ptrue("true"),
 														},
 													},
 												},
@@ -285,7 +285,7 @@ func TestParse_OK(t *testing.T) {
 													{
 														Key: "f",
 														Value: &jsonast.JsonValue{
-															False: ptr(jsonast.JsonFalse("false")),
+															False: pfalse("false"),
 														},
 													},
 												},
@@ -297,7 +297,7 @@ func TestParse_OK(t *testing.T) {
 													{
 														Key: "null",
 														Value: &jsonast.JsonValue{
-															Null: ptr(jsonast.JsonNull("null")),
+															Null: pnull("null"),
 														},
 													},
 												},
@@ -312,7 +312,7 @@ func TestParse_OK(t *testing.T) {
 																{
 																	Key: "str",
 																	Value: &jsonast.JsonValue{
-																		String: ptr(jsonast.JsonString("s")),
+																		String: pstr("s"),
 																	},
 																},
 															},
@@ -324,7 +324,7 @@ func TestParse_OK(t *testing.T) {
 																{
 																	Key: "num",
 																	Value: &jsonast.JsonValue{
-																		Number: ptr(jsonast.JsonNumber("1")),
+																		Number: pnum("1"),
 																	},
 																},
 															},
@@ -336,7 +336,7 @@ func TestParse_OK(t *testing.T) {
 																{
 																	Key: "t",
 																	Value: &jsonast.JsonValue{
-																		True: ptr(jsonast.JsonTrue("true")),
+																		True: ptrue("true"),
 																	},
 																},
 															},
@@ -348,7 +348,7 @@ func TestParse_OK(t *testing.T) {
 																{
 																	Key: "f",
 																	Value: &jsonast.JsonValue{
-																		False: ptr(jsonast.JsonFalse("false")),
+																		False: pfalse("false"),
 																	},
 																},
 															},
@@ -360,7 +360,7 @@ func TestParse_OK(t *testing.T) {
 																{
 																	Key: "null",
 																	Value: &jsonast.JsonValue{
-																		Null: ptr(jsonast.JsonNull("null")),
+																		Null: pnull("null"),
 																	},
 																},
 															},
@@ -396,7 +396,7 @@ func TestParse_OK(t *testing.T) {
 									{
 										Key: "str",
 										Value: &jsonast.JsonValue{
-											String: ptr(jsonast.JsonString("s")),
+											String: pstr("s"),
 										},
 									},
 								},
@@ -408,7 +408,7 @@ func TestParse_OK(t *testing.T) {
 									{
 										Key: "num",
 										Value: &jsonast.JsonValue{
-											Number: ptr(jsonast.JsonNumber("1")),
+											Number: pnum("1"),
 										},
 									},
 								},
@@ -420,7 +420,7 @@ func TestParse_OK(t *testing.T) {
 									{
 										Key: "t",
 										Value: &jsonast.JsonValue{
-											True: ptr(jsonast.JsonTrue("true")),
+											True: ptrue("true"),
 										},
 									},
 								},
@@ -432,7 +432,7 @@ func TestParse_OK(t *testing.T) {
 									{
 										Key: "f",
 										Value: &jsonast.JsonValue{
-											False: ptr(jsonast.JsonFalse("false")),
+											False: pfalse("false"),
 										},
 									},
 								},
@@ -444,7 +444,7 @@ func TestParse_OK(t *testing.T) {
 									{
 										Key: "null",
 										Value: &jsonast.JsonValue{
-											Null: ptr(jsonast.JsonNull("null")),
+											Null: pnull("null"),
 										},
 									},
 								},
@@ -459,7 +459,7 @@ func TestParse_OK(t *testing.T) {
 												{
 													Key: "str",
 													Value: &jsonast.JsonValue{
-														String: ptr(jsonast.JsonString("s")),
+														String: pstr("s"),
 													},
 												},
 											},
@@ -471,7 +471,7 @@ func TestParse_OK(t *testing.T) {
 												{
 													Key: "num",
 													Value: &jsonast.JsonValue{
-														Number: ptr(jsonast.JsonNumber("1")),
+														Number: pnum("1"),
 													},
 												},
 											},
@@ -483,7 +483,7 @@ func TestParse_OK(t *testing.T) {
 												{
 													Key: "t",
 													Value: &jsonast.JsonValue{
-														True: ptr(jsonast.JsonTrue("true")),
+														True: ptrue("true"),
 													},
 												},
 											},
@@ -495,7 +495,7 @@ func TestParse_OK(t *testing.T) {
 												{
 													Key: "f",
 													Value: &jsonast.JsonValue{
-														False: ptr(jsonast.JsonFalse("false")),
+														False: pfalse("false"),
 													},
 												},
 											},
@@ -507,7 +507,7 @@ func TestParse_OK(t *testing.T) {
 												{
 													Key: "null",
 													Value: &jsonast.JsonValue{
-														Null: ptr(jsonast.JsonNull("null")),
+														Null: pnull("null"),
 													},
 												},
 											},
@@ -559,13 +559,13 @@ func TestIsXXX(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			v := &jsonast.JsonValue{}
 			if tt.False {
-				v.False = ptr(jsonast.JsonFalse(""))
+				v.False = pfalse("")
 			}
 			if tt.Null {
-				v.Null = ptr(jsonast.JsonNull(""))
+				v.Null = pnull("")
 			}
 			if tt.True {
-				v.True = ptr(jsonast.JsonTrue(""))
+				v.True = ptrue("")
 			}
 			if tt.Object {
 				v.Object = &jsonast.JsonObject{}
@@ -574,10 +574,10 @@ func TestIsXXX(t *testing.T) {
 				v.Array = &jsonast.JsonArray{}
 			}
 			if tt.Number {
-				v.Number = ptr(jsonast.JsonNumber(""))
+				v.Number = pnum("")
 			}
 			if tt.String {
-				v.String = ptr(jsonast.JsonString(""))
+				v.String = pstr("")
 			}
 
 			assert.Equal(t, tt.False, v.IsFalse())
@@ -604,13 +604,13 @@ func TestValue(t *testing.T) {
 		String   bool
 		expected any
 	}{
-		{name: "ValueOfFalse", False: true, expected: ptr(jsonast.JsonFalse(""))},
-		{name: "ValueOfNull", Null: true, expected: ptr(jsonast.JsonNull(""))},
-		{name: "ValueOfTrue", True: true, expected: ptr(jsonast.JsonTrue(""))},
+		{name: "ValueOfFalse", False: true, expected: pfalse("")},
+		{name: "ValueOfNull", Null: true, expected: pnull("")},
+		{name: "ValueOfTrue", True: true, expected: ptrue("")},
 		{name: "ValueOfObject", Object: true, expected: &jsonast.JsonObject{}},
 		{name: "ValueOfArray", Array: true, expected: &jsonast.JsonArray{}},
-		{name: "ValueOfNumber", Number: true, expected: ptr(jsonast.JsonNumber(""))},
-		{name: "ValueOfString", String: true, expected: ptr(jsonast.JsonString(""))},
+		{name: "ValueOfNumber", Number: true, expected: pnum("")},
+		{name: "ValueOfString", String: true, expected: pstr("")},
 		{name: "ValueOfNil", expected: nil},
 	}
 
@@ -618,13 +618,13 @@ func TestValue(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			v := &jsonast.JsonValue{}
 			if tt.False {
-				v.False = ptr(jsonast.JsonFalse(""))
+				v.False = pfalse("")
 			}
 			if tt.Null {
-				v.Null = ptr(jsonast.JsonNull(""))
+				v.Null = pnull("")
 			}
 			if tt.True {
-				v.True = ptr(jsonast.JsonTrue(""))
+				v.True = ptrue("")
 			}
 			if tt.Object {
 				v.Object = &jsonast.JsonObject{}
@@ -633,10 +633,10 @@ func TestValue(t *testing.T) {
 				v.Array = &jsonast.JsonArray{}
 			}
 			if tt.Number {
-				v.Number = ptr(jsonast.JsonNumber(""))
+				v.Number = pnum("")
 			}
 			if tt.String {
-				v.String = ptr(jsonast.JsonString(""))
+				v.String = pstr("")
 			}
 
 			assert.Equal(t, tt.expected, v.Value())
