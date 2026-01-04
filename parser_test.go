@@ -533,3 +533,59 @@ func TestParse_OK(t *testing.T) {
 		})
 	}
 }
+
+func TestIsXXX(t *testing.T) {
+	tests := []struct {
+		name   string
+		False  bool
+		Null   bool
+		True   bool
+		Object bool
+		Array  bool
+		Number bool
+		String bool
+	}{
+		{name: "IsFalse", False: true},
+		{name: "IsNull", Null: true},
+		{name: "IsTrue", True: true},
+		{name: "IsObject", Object: true},
+		{name: "IsArray", Array: true},
+		{name: "IsNumber", Number: true},
+		{name: "IsString", String: true},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			v := &jsonast.JsonValue{}
+			if tt.False {
+				v.False = ptr("")
+			}
+			if tt.Null {
+				v.Null = ptr("")
+			}
+			if tt.True {
+				v.True = ptr("")
+			}
+			if tt.Object {
+				v.Object = &jsonast.JsonObject{}
+			}
+			if tt.Array {
+				v.Array = &jsonast.JsonArray{}
+			}
+			if tt.Number {
+				v.Number = ptr("")
+			}
+			if tt.String {
+				v.String = ptr("")
+			}
+
+			assert.Equal(t, tt.False, v.IsFalse())
+			assert.Equal(t, tt.Null, v.IsNull())
+			assert.Equal(t, tt.True, v.IsTrue())
+			assert.Equal(t, tt.Object, v.IsObject())
+			assert.Equal(t, tt.Array, v.IsArray())
+			assert.Equal(t, tt.Number, v.IsNumber())
+			assert.Equal(t, tt.String, v.IsString())
+		})
+	}
+}
