@@ -589,3 +589,69 @@ func TestIsXXX(t *testing.T) {
 		})
 	}
 }
+
+func TestIsObjectArray(t *testing.T) {
+	tests := []struct {
+		values   []*jsonast.JsonValue
+		expected bool
+	}{
+		{
+			values:   []*jsonast.JsonValue{{String: ptr("")}, {String: ptr("")}},
+			expected: false,
+		},
+		{
+			values:   []*jsonast.JsonValue{},
+			expected: false,
+		},
+		{
+			values:   []*jsonast.JsonValue{{String: ptr("")}, {Object: &jsonast.JsonObject{}}},
+			expected: false,
+		},
+		{
+			values:   []*jsonast.JsonValue{{Object: &jsonast.JsonObject{}}},
+			expected: true,
+		},
+		{
+			values:   []*jsonast.JsonValue{{Object: &jsonast.JsonObject{}}, {Object: &jsonast.JsonObject{}}},
+			expected: true,
+		},
+	}
+
+	for _, tt := range tests {
+		v := &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: tt.values}}
+		assert.Equal(t, tt.expected, v.IsObjectArray())
+	}
+}
+
+func TestObjectArray(t *testing.T) {
+	tests := []struct {
+		values   []*jsonast.JsonValue
+		expected []*jsonast.JsonObject
+	}{
+		{
+			values:   []*jsonast.JsonValue{{String: ptr("")}, {String: ptr("")}},
+			expected: nil,
+		},
+		{
+			values:   []*jsonast.JsonValue{},
+			expected: nil,
+		},
+		{
+			values:   []*jsonast.JsonValue{{String: ptr("")}, {Object: &jsonast.JsonObject{}}},
+			expected: nil,
+		},
+		{
+			values:   []*jsonast.JsonValue{{Object: &jsonast.JsonObject{}}},
+			expected: []*jsonast.JsonObject{{}},
+		},
+		{
+			values:   []*jsonast.JsonValue{{Object: &jsonast.JsonObject{}}, {Object: &jsonast.JsonObject{}}},
+			expected: []*jsonast.JsonObject{{}, {}},
+		},
+	}
+
+	for _, tt := range tests {
+		v := &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: tt.values}}
+		assert.Equal(t, tt.expected, v.ObjectArray())
+	}
+}
