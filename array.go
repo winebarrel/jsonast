@@ -23,13 +23,13 @@ func (v *JsonArray) FalseArray() []*JsonFalse {
 		return nil
 	}
 
-	objs := make([]*JsonFalse, 0, len(v.Elements))
+	a := make([]*JsonFalse, 0, len(v.Elements))
 
 	for _, e := range v.Elements {
-		objs = append(objs, e.False)
+		a = append(a, e.False)
 	}
 
-	return objs
+	return a
 }
 
 func (v *JsonArray) IsNullArray() bool {
@@ -51,13 +51,13 @@ func (v *JsonArray) NullArray() []*JsonNull {
 		return nil
 	}
 
-	objs := make([]*JsonNull, 0, len(v.Elements))
+	a := make([]*JsonNull, 0, len(v.Elements))
 
 	for _, e := range v.Elements {
-		objs = append(objs, e.Null)
+		a = append(a, e.Null)
 	}
 
-	return objs
+	return a
 }
 
 func (v *JsonArray) IsTrueArray() bool {
@@ -79,13 +79,13 @@ func (v *JsonArray) TrueArray() []*JsonTrue {
 		return nil
 	}
 
-	objs := make([]*JsonTrue, 0, len(v.Elements))
+	a := make([]*JsonTrue, 0, len(v.Elements))
 
 	for _, e := range v.Elements {
-		objs = append(objs, e.True)
+		a = append(a, e.True)
 	}
 
-	return objs
+	return a
 }
 
 func (v *JsonArray) IsObjectArray() bool {
@@ -107,13 +107,13 @@ func (v *JsonArray) ObjectArray() []*JsonObject {
 		return nil
 	}
 
-	objs := make([]*JsonObject, 0, len(v.Elements))
+	a := make([]*JsonObject, 0, len(v.Elements))
 
 	for _, e := range v.Elements {
-		objs = append(objs, e.Object)
+		a = append(a, e.Object)
 	}
 
-	return objs
+	return a
 }
 
 func (v *JsonArray) IsArrayArray() bool {
@@ -135,13 +135,13 @@ func (v *JsonArray) ArrayArray() []*JsonArray {
 		return nil
 	}
 
-	objs := make([]*JsonArray, 0, len(v.Elements))
+	a := make([]*JsonArray, 0, len(v.Elements))
 
 	for _, e := range v.Elements {
-		objs = append(objs, e.Array)
+		a = append(a, e.Array)
 	}
 
-	return objs
+	return a
 }
 
 func (v *JsonArray) IsNumberArray() bool {
@@ -163,13 +163,13 @@ func (v *JsonArray) NumberArray() []*JsonNumber {
 		return nil
 	}
 
-	objs := make([]*JsonNumber, 0, len(v.Elements))
+	a := make([]*JsonNumber, 0, len(v.Elements))
 
 	for _, e := range v.Elements {
-		objs = append(objs, e.Number)
+		a = append(a, e.Number)
 	}
 
-	return objs
+	return a
 }
 
 func (v *JsonArray) IsStringArray() bool {
@@ -191,11 +191,11 @@ func (v *JsonArray) StringArray() []*JsonString {
 		return nil
 	}
 
-	objs := make([]*JsonString, 0, len(v.Elements))
+	a := make([]*JsonString, 0, len(v.Elements))
 
 	for _, e := range v.Elements {
-		objs = append(objs, e.String)
+		a = append(a, e.String)
 	}
 
-	return objs
+	return a
 }
