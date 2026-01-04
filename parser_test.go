@@ -9,6 +9,13 @@ import (
 	"github.com/winebarrel/jsonast"
 )
 
+func TestParse_EmptyString(t *testing.T) {
+	_, err := jsonast.ParseBytes("", []byte(""))
+	assert.ErrorContains(t, err, `1:1: unexpected token "<EOF>"`)
+	_, err = jsonast.Parse("", strings.NewReader(""))
+	assert.ErrorContains(t, err, `1:1: unexpected token "<EOF>"`)
+}
+
 func TestParse_ParseErr(t *testing.T) {
 	_, err := jsonast.ParseBytes("", []byte(`{`))
 	assert.ErrorContains(t, err, `1:2: unexpected token "<EOF>" (expected "}")`)
