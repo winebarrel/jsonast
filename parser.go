@@ -84,34 +84,6 @@ func (v *JsonValue) IsPrimitive() bool {
 		v.String != nil
 }
 
-func (v *JsonArray) IsObjectArray() bool {
-	if len(v.Elements) == 0 {
-		return false
-	}
-
-	for _, e := range v.Elements {
-		if !e.IsObject() {
-			return false
-		}
-	}
-
-	return true
-}
-
-func (v *JsonArray) ObjectArray() []*JsonObject {
-	if !v.IsObjectArray() {
-		return nil
-	}
-
-	objs := make([]*JsonObject, 0, len(v.Elements))
-
-	for _, e := range v.Elements {
-		objs = append(objs, e.Object)
-	}
-
-	return objs
-}
-
 type JsonObject struct {
 	Members []*JsonObjectMember `parser:"'{' @@* '}'"`
 }
@@ -123,10 +95,6 @@ type JsonObjectMember struct {
 
 type JsonArray struct {
 	Elements []*JsonValue `parser:"'[' @@* ']'"`
-}
-
-func (v *JsonArray) Len() int {
-	return len(v.Elements)
 }
 
 func ParseBytes(filename string, src []byte) (*JsonValue, error) {
