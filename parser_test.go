@@ -590,7 +590,7 @@ func TestIsXXX(t *testing.T) {
 	}
 }
 
-func TestIsObjectArray(t *testing.T) {
+func TestArrayIsObjectArray(t *testing.T) {
 	tests := []struct {
 		values   []*jsonast.JsonValue
 		expected bool
@@ -618,12 +618,12 @@ func TestIsObjectArray(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		v := &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: tt.values}}
+		v := &jsonast.JsonArray{Elements: tt.values}
 		assert.Equal(t, tt.expected, v.IsObjectArray())
 	}
 }
 
-func TestObjectArray(t *testing.T) {
+func TestArrayObjectArray(t *testing.T) {
 	tests := []struct {
 		values   []*jsonast.JsonValue
 		expected []*jsonast.JsonObject
@@ -651,7 +651,7 @@ func TestObjectArray(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		v := &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: tt.values}}
+		v := &jsonast.JsonArray{Elements: tt.values}
 		assert.Equal(t, tt.expected, v.ObjectArray())
 	}
 }

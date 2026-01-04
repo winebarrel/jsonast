@@ -50,12 +50,12 @@ func (v *JsonValue) IsString() bool {
 	return v.String != nil
 }
 
-func (v *JsonValue) IsObjectArray() bool {
-	if v.Array == nil || len(v.Array.Elements) == 0 {
+func (v *JsonArray) IsObjectArray() bool {
+	if len(v.Elements) == 0 {
 		return false
 	}
 
-	for _, e := range v.Array.Elements {
+	for _, e := range v.Elements {
 		if !e.IsObject() {
 			return false
 		}
@@ -64,14 +64,14 @@ func (v *JsonValue) IsObjectArray() bool {
 	return true
 }
 
-func (v *JsonValue) ObjectArray() []*JsonObject {
+func (v *JsonArray) ObjectArray() []*JsonObject {
 	if !v.IsObjectArray() {
 		return nil
 	}
 
-	objs := make([]*JsonObject, 0, len(v.Array.Elements))
+	objs := make([]*JsonObject, 0, len(v.Elements))
 
-	for _, e := range v.Array.Elements {
+	for _, e := range v.Elements {
 		objs = append(objs, e.Object)
 	}
 
