@@ -50,6 +50,34 @@ func (v *JsonValue) IsString() bool {
 	return v.String != nil
 }
 
+func (v *JsonValue) IsObjectArray() bool {
+	if v.Array == nil || len(v.Array.Elements) == 0 {
+		return false
+	}
+
+	for _, e := range v.Array.Elements {
+		if !e.IsObject() {
+			return false
+		}
+	}
+
+	return true
+}
+
+func (v *JsonValue) ObjectArray() []*JsonObject {
+	if !v.IsObjectArray() {
+		return nil
+	}
+
+	objs := make([]*JsonObject, 0, len(v.Array.Elements))
+
+	for _, e := range v.Array.Elements {
+		objs = append(objs, e.Object)
+	}
+
+	return objs
+}
+
 type JsonObject struct {
 	Members []*JsonObjectMember `parser:"'{' @@* '}'"`
 }
