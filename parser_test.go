@@ -643,3 +643,11 @@ func TestValue(t *testing.T) {
 		})
 	}
 }
+
+func TestNumberString(t *testing.T) {
+	assert.Equal(t, "1.1", pnum("1.1").String())
+}
+
+func TestStringString(t *testing.T) {
+	assert.Equal(t, "hello", pstr("hello").String())
+}

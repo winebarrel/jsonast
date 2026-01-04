@@ -16,7 +16,16 @@ type JsonFalse string
 type JsonNull string
 type JsonTrue string
 type JsonNumber string
+
+func (v *JsonNumber) String() string {
+	return string(*v)
+}
+
 type JsonString string
+
+func (v *JsonString) String() string {
+	return string(*v)
+}
 
 type JsonValue struct {
 	False  *JsonFalse  `parser:"@false |"`
