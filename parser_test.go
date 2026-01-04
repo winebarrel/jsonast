@@ -655,3 +655,32 @@ func TestObjectArray(t *testing.T) {
 		assert.Equal(t, tt.expected, v.ObjectArray())
 	}
 }
+
+func TestArrayLen(t *testing.T) {
+	tests := []struct {
+		values   []string
+		expected int
+	}{
+		{
+			values:   []string{},
+			expected: 0,
+		},
+		{
+			values:   []string{"a"},
+			expected: 1,
+		},
+		{
+			values:   []string{"a", "b"},
+			expected: 2,
+		},
+	}
+
+	for _, tt := range tests {
+		elems := []*jsonast.JsonValue{}
+		for _, s := range tt.values {
+			elems = append(elems, &jsonast.JsonValue{String: &s})
+		}
+		v := &jsonast.JsonArray{Elements: elems}
+		assert.Equal(t, tt.expected, v.Len())
+	}
+}
