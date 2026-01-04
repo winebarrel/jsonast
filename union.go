@@ -63,7 +63,9 @@ func (v *JsonArray) UnionType(other *JsonValue) *JsonValue {
 		return &JsonValue{Array: &JsonArray{Elements: []*JsonValue{}}}
 	}
 
-	elems := append(v.Elements, oary.Elements...)
+	elems := make([]*JsonValue, 0, len(v.Elements)+len(oary.Elements))
+	elems = append(elems, v.Elements...)
+	elems = append(elems, oary.Elements...)
 	union := elems[0]
 	elems = elems[1:]
 
