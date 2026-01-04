@@ -1,6 +1,7 @@
 package jsonast_test
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -8,17 +9,21 @@ import (
 	"github.com/winebarrel/jsonast"
 )
 
-func TestParseJSON_ParseErr(t *testing.T) {
-	_, err := jsonast.ParseJSON("", []byte(`{`))
+func TestParse_ParseErr(t *testing.T) {
+	_, err := jsonast.ParseBytes("", []byte(`{`))
+	assert.ErrorContains(t, err, `1:2: unexpected token "<EOF>" (expected "}")`)
+	_, err = jsonast.Parse("", strings.NewReader(`{`))
 	assert.ErrorContains(t, err, `1:2: unexpected token "<EOF>" (expected "}")`)
 }
 
-func TestParseJSON_LexErr(t *testing.T) {
-	_, err := jsonast.ParseJSON("", []byte(`{"foo:"bar"}`))
+func TestParse_LexErr(t *testing.T) {
+	_, err := jsonast.ParseBytes("", []byte(`{"foo:"bar"}`))
+	assert.ErrorContains(t, err, `1:8: invalid character 'b' after object key`)
+	_, err = jsonast.Parse("", strings.NewReader(`{"foo:"bar"}`))
 	assert.ErrorContains(t, err, `1:8: invalid character 'b' after object key`)
 }
 
-func TestParseJSON_OK(t *testing.T) {
+func TestParse_OK(t *testing.T) {
 	tests := []struct {
 		name     string
 		json     string
@@ -512,7 +517,10 @@ func TestParseJSON_OK(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			v, err := jsonast.ParseJSON("", []byte(tt.json))
+			v, err := jsonast.ParseBytes("", []byte(tt.json))
+			require.NoError(t, err)
+			assert.Equal(t, tt.expected, v)
+			v, err = jsonast.Parse("", strings.NewReader(tt.json))
 			require.NoError(t, err)
 			assert.Equal(t, tt.expected, v)
 		})

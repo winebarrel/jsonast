@@ -1,6 +1,8 @@
 package jsonast
 
 import (
+	"io"
+
 	"github.com/alecthomas/participle/v2"
 )
 
@@ -33,8 +35,18 @@ type JsonArray struct {
 	Elements []*JsonValue `parser:"'[' @@* ']'"`
 }
 
-func ParseJSON(filename string, src []byte) (*JsonValue, error) {
+func ParseBytes(filename string, src []byte) (*JsonValue, error) {
 	v, err := jsonParser.ParseBytes(filename, src)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return v, nil
+}
+
+func Parse(filename string, r io.Reader) (*JsonValue, error) {
+	v, err := jsonParser.Parse(filename, r)
 
 	if err != nil {
 		return nil, err
