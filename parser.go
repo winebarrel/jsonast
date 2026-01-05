@@ -12,19 +12,42 @@ var (
 	)
 )
 
-type JsonFalse string
-type JsonNull string
-type JsonTrue string
-type JsonNumber string
+type JsonFalse struct{}
 
-func (v *JsonNumber) String() string {
-	return string(*v)
+func (*JsonFalse) UnmarshalText([]byte) error { return nil }
+
+type JsonNull struct{}
+
+func (*JsonNull) UnmarshalText([]byte) error { return nil }
+
+type JsonTrue struct{}
+
+func (*JsonTrue) UnmarshalText([]byte) error { return nil }
+
+type JsonNumber struct {
+	text string
 }
 
-type JsonString string
+func (v *JsonNumber) UnmarshalText(text []byte) error {
+	v.text = string(text)
+	return nil
+}
 
-func (v *JsonString) String() string {
-	return string(*v)
+func (v *JsonNumber) Text() string {
+	return v.text
+}
+
+type JsonString struct {
+	text string
+}
+
+func (v *JsonString) UnmarshalText(text []byte) error {
+	v.text = string(text)
+	return nil
+}
+
+func (v *JsonString) Text() string {
+	return v.text
 }
 
 type JsonValue struct {
@@ -83,14 +106,6 @@ func (v *JsonValue) IsNumber() bool {
 
 func (v *JsonValue) IsString() bool {
 	return v.String != nil
-}
-
-func (v *JsonValue) IsPrimitive() bool {
-	return v.False != nil ||
-		v.Null != nil ||
-		v.True != nil ||
-		v.Number != nil ||
-		v.String != nil
 }
 
 type JsonObject struct {

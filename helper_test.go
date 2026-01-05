@@ -1,28 +1,29 @@
 package jsonast_test
 
-import "github.com/winebarrel/jsonast"
+import (
+	"github.com/winebarrel/jsonast"
+)
 
-func pstr(v string) *jsonast.JsonString {
-	x := jsonast.JsonString(v)
-	return &x
+func vstr(v string) *jsonast.JsonString {
+	s := &jsonast.JsonString{}
+	s.UnmarshalText([]byte(v))
+	return s
 }
 
-func pnum(v string) *jsonast.JsonNumber {
-	x := jsonast.JsonNumber(v)
-	return &x
+func vnum(v string) *jsonast.JsonNumber {
+	n := &jsonast.JsonNumber{}
+	n.UnmarshalText([]byte(v))
+	return n
 }
 
-func ptrue(v string) *jsonast.JsonTrue {
-	x := jsonast.JsonTrue(v)
-	return &x
+func vtrue() *jsonast.JsonTrue {
+	return &jsonast.JsonTrue{}
 }
 
-func pfalse(v string) *jsonast.JsonFalse {
-	x := jsonast.JsonFalse(v)
-	return &x
+func vfalse() *jsonast.JsonFalse {
+	return &jsonast.JsonFalse{}
 }
 
-func pnull(v string) *jsonast.JsonNull {
-	x := jsonast.JsonNull(v)
-	return &x
+func vnull() *jsonast.JsonNull {
+	return &jsonast.JsonNull{}
 }
