@@ -1,9 +1,5 @@
 package jsonast
 
-import (
-	"github.com/kazamori/orderedmap"
-)
-
 var (
 	nullValue = func() *JsonValue {
 		null := JsonNull("null")
@@ -87,40 +83,48 @@ func (v *JsonObject) UnionType(other *JsonValue) *JsonValue {
 		return nullValue
 	}
 
-	members := orderedmap.New[string, *JsonObjectMember]()
-	keys := map[string]int{}
-
-	for _, m := range v.Members {
-		members.Set(m.Key, m)
-		keys[m.Key] += 1
+	type entry struct {
+		member *JsonObjectMember
+		order  int
+		keycnt int
 	}
+
+	members := make(map[string]*entry, len(v.Members)+len(other.Object.Members))
+
+	for i, m := range v.Members {
+		members[m.Key] = &entry{member: m, order: i, keycnt: 1}
+	}
+
+	midx := len(members)
 
 	for _, omem := range other.Object.Members {
 		k := omem.Key
-		var newm *JsonObjectMember
-		vmem, ok := members.Get(k)
-		keys[k] += 1
+		var ent *entry
 
-		if ok {
-			union := vmem.Value.UnionType(omem.Value)
-			newm = &JsonObjectMember{Key: k, Value: union}
+		if e, ok := members[k]; ok {
+			union := e.member.Value.UnionType(omem.Value)
+			e.member = &JsonObjectMember{Key: k, Value: union}
+			e.keycnt += 1
+			ent = e
 		} else {
-			newm = omem
+			ent = &entry{
+				member: omem,
+				order:  midx,
+				keycnt: 1,
+			}
+			midx++
 		}
 
-		members.Set(k, newm)
+		members[k] = ent
 	}
 
-	entries := []*JsonObjectMember{}
-
-	for _, pair := range members.Pairs() {
-		entries = append(entries, pair.Value)
-	}
-
+	entries := make([]*JsonObjectMember, len(members))
 	omittableKeys := map[string]struct{}{}
 
-	for k, n := range keys {
-		if n == 1 {
+	for k, e := range members {
+		entries[e.order] = e.member
+
+		if e.keycnt == 1 {
 			omittableKeys[k] = struct{}{}
 		}
 	}
