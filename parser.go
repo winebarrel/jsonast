@@ -42,6 +42,10 @@ func (v *JsonString) UnmarshalText(text []byte) error {
 	return nil
 }
 
+type ValueType interface {
+	UnionType(*JsonValue) *JsonValue
+}
+
 type JsonValue struct {
 	False  *JsonFalse  `parser:"@false |"`
 	Null   *JsonNull   `parser:"@null |"`
@@ -52,7 +56,7 @@ type JsonValue struct {
 	String *JsonString `parser:"@string"`
 }
 
-func (v *JsonValue) Value() any {
+func (v *JsonValue) Value() ValueType {
 	if v.False != nil {
 		return v.False
 	} else if v.Null != nil {
