@@ -16,45 +16,45 @@ func TestStringUnionType(t *testing.T) {
 	}{
 		{
 			name:     "string <=> string",
-			value:    pstr("s"),
-			other:    &jsonast.JsonValue{String: pstr("s")},
-			expected: &jsonast.JsonValue{String: pstr("s")},
+			value:    vstr("s"),
+			other:    &jsonast.JsonValue{String: vstr("s")},
+			expected: &jsonast.JsonValue{String: vstr("s")},
 		},
 		{
 			name:     "string <=> number",
-			value:    pstr("s"),
-			other:    &jsonast.JsonValue{Number: pnum("1")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			value:    vstr("s"),
+			other:    &jsonast.JsonValue{Number: vnum("1")},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name:     "string <=> true",
-			value:    pstr("s"),
-			other:    &jsonast.JsonValue{True: ptrue("true")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			value:    vstr("s"),
+			other:    &jsonast.JsonValue{True: vtrue()},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name:     "string <=> false",
-			value:    pstr("s"),
-			other:    &jsonast.JsonValue{False: pfalse("false")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			value:    vstr("s"),
+			other:    &jsonast.JsonValue{False: vfalse()},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name:     "string <=> null",
-			value:    pstr("s"),
-			other:    &jsonast.JsonValue{Null: pnull("null")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			value:    vstr("s"),
+			other:    &jsonast.JsonValue{Null: vnull()},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name:     "string <=> array",
-			value:    pstr("s"),
+			value:    vstr("s"),
 			other:    &jsonast.JsonValue{Array: &jsonast.JsonArray{}},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name:     "string <=> object",
-			value:    pstr("s"),
+			value:    vstr("s"),
 			other:    &jsonast.JsonValue{Object: &jsonast.JsonObject{}},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 	}
 
@@ -75,45 +75,45 @@ func TestNumberUnionType(t *testing.T) {
 	}{
 		{
 			name:     "number <=> string",
-			value:    pnum("1"),
-			other:    &jsonast.JsonValue{String: pstr("s")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			value:    vnum("1"),
+			other:    &jsonast.JsonValue{String: vstr("s")},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name:     "number <=> number",
-			value:    pnum("1"),
-			other:    &jsonast.JsonValue{Number: pnum("1")},
-			expected: &jsonast.JsonValue{Number: pnum("1")},
+			value:    vnum("1"),
+			other:    &jsonast.JsonValue{Number: vnum("1")},
+			expected: &jsonast.JsonValue{Number: vnum("1")},
 		},
 		{
 			name:     "number <=> true",
-			value:    pnum("1"),
-			other:    &jsonast.JsonValue{True: ptrue("true")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			value:    vnum("1"),
+			other:    &jsonast.JsonValue{True: vtrue()},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name:     "number <=> false",
-			value:    pnum("1"),
-			other:    &jsonast.JsonValue{False: pfalse("false")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			value:    vnum("1"),
+			other:    &jsonast.JsonValue{False: vfalse()},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name:     "number <=> null",
-			value:    pnum("1"),
-			other:    &jsonast.JsonValue{Null: pnull("null")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			value:    vnum("1"),
+			other:    &jsonast.JsonValue{Null: vnull()},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name:     "number <=> array",
-			value:    pnum("1"),
+			value:    vnum("1"),
 			other:    &jsonast.JsonValue{Array: &jsonast.JsonArray{}},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name:     "number <=> object",
-			value:    pnum("1"),
+			value:    vnum("1"),
 			other:    &jsonast.JsonValue{Object: &jsonast.JsonObject{}},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 	}
 
@@ -134,45 +134,45 @@ func TestTrueUnionType(t *testing.T) {
 	}{
 		{
 			name:     "true <=> string",
-			value:    ptrue("true"),
-			other:    &jsonast.JsonValue{String: pstr("s")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			value:    vtrue(),
+			other:    &jsonast.JsonValue{String: vstr("s")},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name:     "true <=> number",
-			value:    ptrue("true"),
-			other:    &jsonast.JsonValue{Number: pnum("1")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			value:    vtrue(),
+			other:    &jsonast.JsonValue{Number: vnum("1")},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name:     "true <=> true",
-			value:    ptrue("true"),
-			other:    &jsonast.JsonValue{True: ptrue("true")},
-			expected: &jsonast.JsonValue{True: ptrue("true")},
+			value:    vtrue(),
+			other:    &jsonast.JsonValue{True: vtrue()},
+			expected: &jsonast.JsonValue{True: vtrue()},
 		},
 		{
 			name:     "true <=> false",
-			value:    ptrue("true"),
-			other:    &jsonast.JsonValue{False: pfalse("false")},
-			expected: &jsonast.JsonValue{True: ptrue("true")},
+			value:    vtrue(),
+			other:    &jsonast.JsonValue{False: vfalse()},
+			expected: &jsonast.JsonValue{True: vtrue()},
 		},
 		{
 			name:     "true <=> null",
-			value:    ptrue("true"),
-			other:    &jsonast.JsonValue{Null: pnull("null")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			value:    vtrue(),
+			other:    &jsonast.JsonValue{Null: vnull()},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name:     "true <=> array",
-			value:    ptrue("true"),
+			value:    vtrue(),
 			other:    &jsonast.JsonValue{Array: &jsonast.JsonArray{}},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name:     "true <=> object",
-			value:    ptrue("true"),
+			value:    vtrue(),
 			other:    &jsonast.JsonValue{Object: &jsonast.JsonObject{}},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 	}
 
@@ -193,45 +193,45 @@ func TestFalseUnionType(t *testing.T) {
 	}{
 		{
 			name:     "false <=> string",
-			value:    pfalse("false"),
-			other:    &jsonast.JsonValue{String: pstr("s")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			value:    vfalse(),
+			other:    &jsonast.JsonValue{String: vstr("s")},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name:     "false <=> number",
-			value:    pfalse("false"),
-			other:    &jsonast.JsonValue{Number: pnum("1")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			value:    vfalse(),
+			other:    &jsonast.JsonValue{Number: vnum("1")},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name:     "false <=> true",
-			value:    pfalse("false"),
-			other:    &jsonast.JsonValue{True: ptrue("true")},
-			expected: &jsonast.JsonValue{False: pfalse("false")},
+			value:    vfalse(),
+			other:    &jsonast.JsonValue{True: vtrue()},
+			expected: &jsonast.JsonValue{False: vfalse()},
 		},
 		{
 			name:     "false <=> false",
-			value:    pfalse("false"),
-			other:    &jsonast.JsonValue{False: pfalse("false")},
-			expected: &jsonast.JsonValue{False: pfalse("false")},
+			value:    vfalse(),
+			other:    &jsonast.JsonValue{False: vfalse()},
+			expected: &jsonast.JsonValue{False: vfalse()},
 		},
 		{
 			name:     "false <=> null",
-			value:    pfalse("false"),
-			other:    &jsonast.JsonValue{Null: pnull("null")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			value:    vfalse(),
+			other:    &jsonast.JsonValue{Null: vnull()},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name:     "false <=> array",
-			value:    pfalse("false"),
+			value:    vfalse(),
 			other:    &jsonast.JsonValue{Array: &jsonast.JsonArray{}},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name:     "false <=> object",
-			value:    pfalse("false"),
+			value:    vfalse(),
 			other:    &jsonast.JsonValue{Object: &jsonast.JsonObject{}},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 	}
 
@@ -252,45 +252,45 @@ func TestNullUnionType(t *testing.T) {
 	}{
 		{
 			name:     "null <=> string",
-			value:    pnull("null"),
-			other:    &jsonast.JsonValue{String: pstr("s")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			value:    vnull(),
+			other:    &jsonast.JsonValue{String: vstr("s")},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name:     "null <=> number",
-			value:    pnull("null"),
-			other:    &jsonast.JsonValue{Number: pnum("1")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			value:    vnull(),
+			other:    &jsonast.JsonValue{Number: vnum("1")},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name:     "null <=> true",
-			value:    pnull("null"),
-			other:    &jsonast.JsonValue{True: ptrue("true")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			value:    vnull(),
+			other:    &jsonast.JsonValue{True: vtrue()},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name:     "null <=> false",
-			value:    pnull("null"),
-			other:    &jsonast.JsonValue{False: pfalse("false")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			value:    vnull(),
+			other:    &jsonast.JsonValue{False: vfalse()},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name:     "null <=> null",
-			value:    pnull("null"),
-			other:    &jsonast.JsonValue{Null: pnull("null")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			value:    vnull(),
+			other:    &jsonast.JsonValue{Null: vnull()},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name:     "null <=> array",
-			value:    pnull("null"),
+			value:    vnull(),
 			other:    &jsonast.JsonValue{Array: &jsonast.JsonArray{}},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name:     "null <=> object",
-			value:    pnull("null"),
+			value:    vnull(),
 			other:    &jsonast.JsonValue{Object: &jsonast.JsonObject{}},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 	}
 
@@ -312,153 +312,153 @@ func TestArrayUnionType(t *testing.T) {
 		{
 			name: "array <=> true",
 			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{String: pstr("s")},
+				{String: vstr("s")},
 			}},
-			other:    &jsonast.JsonValue{True: ptrue("true")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			other:    &jsonast.JsonValue{True: vtrue()},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name: "array <=> false",
 			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{String: pstr("s")},
+				{String: vstr("s")},
 			}},
-			other:    &jsonast.JsonValue{False: pfalse("false")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			other:    &jsonast.JsonValue{False: vfalse()},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name: "array <=> string",
 			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{String: pstr("s")},
+				{String: vstr("s")},
 			}},
-			other:    &jsonast.JsonValue{String: pstr("s")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			other:    &jsonast.JsonValue{String: vstr("s")},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name: "array <=> number",
 			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{String: pstr("s")},
+				{String: vstr("s")},
 			}},
-			other:    &jsonast.JsonValue{Number: pnum("1")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			other:    &jsonast.JsonValue{Number: vnum("1")},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name: "array <=> null",
 			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{String: pstr("s")},
+				{String: vstr("s")},
 			}},
-			other:    &jsonast.JsonValue{Null: pnull("null")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			other:    &jsonast.JsonValue{Null: vnull()},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name: "array <=> object",
 			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{String: pstr("s")},
+				{String: vstr("s")},
 			}},
 			other:    &jsonast.JsonValue{Object: &jsonast.JsonObject{}},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name: "array <=> string array",
 			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{String: pstr("s")},
+				{String: vstr("s")},
 			}},
 			other: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{String: pstr("s2")},
+				{String: vstr("s2")},
 			}}},
 			expected: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{String: pstr("s")},
+				{String: vstr("s")},
 			}}},
 		},
 		{
 			name: "array <=> number array",
 			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{Number: pnum("1")},
+				{Number: vnum("1")},
 			}},
 			other: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{Number: pnum("2")},
+				{Number: vnum("2")},
 			}}},
 			expected: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{Number: pnum("1")},
+				{Number: vnum("1")},
 			}}},
 		},
 		{
 			name: "array <=> true array",
 			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{True: ptrue("true")},
+				{True: vtrue()},
 			}},
 			other: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{True: ptrue("true")},
+				{True: vtrue()},
 			}}},
 			expected: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{True: ptrue("true")},
+				{True: vtrue()},
 			}}},
 		},
 		{
 			name: "array <=> false array",
 			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{False: pfalse("false")},
+				{False: vfalse()},
 			}},
 			other: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{False: pfalse("false")},
+				{False: vfalse()},
 			}}},
 			expected: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{False: pfalse("false")},
+				{False: vfalse()},
 			}}},
 		},
 		{
 			name: "array <=> null array 1",
 			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{Null: pnull("null")},
+				{Null: vnull()},
 			}},
 			other: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{Null: pnull("null")},
+				{Null: vnull()},
 			}}},
 			expected: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{Null: pnull("null")},
+				{Null: vnull()},
 			}}},
 		},
 		{
 			name: "array <=> null array 2",
 			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{Null: pnull("null")},
+				{Null: vnull()},
 			}},
 			other: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{String: pstr("s")},
+				{String: vstr("s")},
 			}}},
 			expected: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{Null: pnull("null")},
+				{Null: vnull()},
 			}}},
 		},
 		{
 			name: "array <=> null array 3",
 			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{String: pstr("s")},
+				{String: vstr("s")},
 			}},
 			other: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{Null: pnull("null")},
+				{Null: vnull()},
 			}}},
 			expected: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{Null: pnull("null")},
+				{Null: vnull()},
 			}}},
 		},
 		{
 			name: "array <=> empty array 1",
 			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{String: pstr("s")},
+				{String: vstr("s")},
 			}},
 			other: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{}}},
 			expected: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{String: pstr("s")},
+				{String: vstr("s")},
 			}}},
 		},
 		{
 			name:  "array <=> empty array 2",
 			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{}},
 			other: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{String: pstr("s")},
+				{String: vstr("s")},
 			}}},
 			expected: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{String: pstr("s")},
+				{String: vstr("s")},
 			}}},
 		},
 		{
@@ -469,18 +469,18 @@ func TestArrayUnionType(t *testing.T) {
 		},
 		{
 			name:  "array <=> nil 1",
-			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{{String: pstr("s")}}},
+			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{{String: vstr("s")}}},
 			other: nil,
 			expected: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{String: pstr("s")},
+				{String: vstr("s")},
 			}}},
 		},
 		{
 			name:  "array <=> nil 2",
-			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{{String: pstr("s")}, {Number: pnum("1")}}},
+			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{{String: vstr("s")}, {Number: vnum("1")}}},
 			other: nil,
 			expected: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{Null: pnull("null")},
+				{Null: vnull()},
 			}}},
 		},
 		{
@@ -492,31 +492,31 @@ func TestArrayUnionType(t *testing.T) {
 		{
 			name: "array <=> composite array",
 			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{String: pstr("s")},
-				{Number: pnum("1")},
+				{String: vstr("s")},
+				{Number: vnum("1")},
 			}},
 			other: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{String: pstr("s2")},
+				{String: vstr("s2")},
 			}}},
 			expected: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-				{Null: pnull("null")},
+				{Null: vnull()},
 			}}},
 		},
 		{
 			name: "array <=> nested array 1",
 			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
 				{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-					{String: pstr("s")},
+					{String: vstr("s")},
 				}}},
 			}},
 			other: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
 				{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-					{String: pstr("s2")},
+					{String: vstr("s2")},
 				}}},
 			}}},
 			expected: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
 				{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-					{String: pstr("s")},
+					{String: vstr("s")},
 				}}},
 			}}},
 		},
@@ -524,17 +524,17 @@ func TestArrayUnionType(t *testing.T) {
 			name: "array <=> nested array 2",
 			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
 				{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-					{String: pstr("s")},
+					{String: vstr("s")},
 				}}},
 			}},
 			other: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
 				{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-					{Number: pnum("1")},
+					{Number: vnum("1")},
 				}}},
 			}}},
 			expected: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
 				{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
-					{Null: pnull("null")},
+					{Null: vnull()},
 				}}},
 			}}},
 		},
@@ -542,19 +542,19 @@ func TestArrayUnionType(t *testing.T) {
 			name: "array <=> object array 1",
 			value: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
 				{Object: &jsonast.JsonObject{Members: []*jsonast.JsonObjectMember{
-					{Key: "str", Value: &jsonast.JsonValue{String: pstr("s")}},
+					{Key: "str", Value: &jsonast.JsonValue{String: vstr("s")}},
 				}}},
 			}},
 			other: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
 				{Object: &jsonast.JsonObject{Members: []*jsonast.JsonObjectMember{
-					{Key: "str2", Value: &jsonast.JsonValue{String: pstr("s2")}},
+					{Key: "str2", Value: &jsonast.JsonValue{String: vstr("s2")}},
 				}}},
 			}}},
 			expected: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{
 				{Object: &jsonast.JsonObject{
 					Members: []*jsonast.JsonObjectMember{
-						{Key: "str", Value: &jsonast.JsonValue{String: pstr("s")}},
-						{Key: "str2", Value: &jsonast.JsonValue{String: pstr("s2")}},
+						{Key: "str", Value: &jsonast.JsonValue{String: vstr("s")}},
+						{Key: "str2", Value: &jsonast.JsonValue{String: vstr("s2")}},
 					},
 					OmittableKeys: map[string]struct{}{"str": {}, "str2": {}},
 				}},
@@ -580,63 +580,63 @@ func TestObjectUnionType(t *testing.T) {
 		{
 			name: "object <=> true",
 			value: &jsonast.JsonObject{Members: []*jsonast.JsonObjectMember{
-				{Key: "str", Value: &jsonast.JsonValue{String: pstr("s")}},
+				{Key: "str", Value: &jsonast.JsonValue{String: vstr("s")}},
 			}},
-			other:    &jsonast.JsonValue{True: ptrue("true")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			other:    &jsonast.JsonValue{True: vtrue()},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name: "object <=> false",
 			value: &jsonast.JsonObject{Members: []*jsonast.JsonObjectMember{
-				{Key: "str", Value: &jsonast.JsonValue{String: pstr("s")}},
+				{Key: "str", Value: &jsonast.JsonValue{String: vstr("s")}},
 			}},
-			other:    &jsonast.JsonValue{False: pfalse("false")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			other:    &jsonast.JsonValue{False: vfalse()},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name: "object <=> string",
 			value: &jsonast.JsonObject{Members: []*jsonast.JsonObjectMember{
-				{Key: "str", Value: &jsonast.JsonValue{String: pstr("s")}},
+				{Key: "str", Value: &jsonast.JsonValue{String: vstr("s")}},
 			}},
-			other:    &jsonast.JsonValue{String: pstr("s")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			other:    &jsonast.JsonValue{String: vstr("s")},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name: "object <=> number",
 			value: &jsonast.JsonObject{Members: []*jsonast.JsonObjectMember{
-				{Key: "str", Value: &jsonast.JsonValue{String: pstr("s")}},
+				{Key: "str", Value: &jsonast.JsonValue{String: vstr("s")}},
 			}},
-			other:    &jsonast.JsonValue{Number: pnum("1")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			other:    &jsonast.JsonValue{Number: vnum("1")},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name: "object <=> null",
 			value: &jsonast.JsonObject{Members: []*jsonast.JsonObjectMember{
-				{Key: "str", Value: &jsonast.JsonValue{String: pstr("s")}},
+				{Key: "str", Value: &jsonast.JsonValue{String: vstr("s")}},
 			}},
-			other:    &jsonast.JsonValue{Null: pnull("null")},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			other:    &jsonast.JsonValue{Null: vnull()},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name: "object <=> array",
 			value: &jsonast.JsonObject{Members: []*jsonast.JsonObjectMember{
-				{Key: "str", Value: &jsonast.JsonValue{String: pstr("s")}},
+				{Key: "str", Value: &jsonast.JsonValue{String: vstr("s")}},
 			}},
 			other:    &jsonast.JsonValue{Array: &jsonast.JsonArray{}},
-			expected: &jsonast.JsonValue{Null: pnull("null")},
+			expected: &jsonast.JsonValue{Null: vnull()},
 		},
 		{
 			name: "object <=> object 1",
 			value: &jsonast.JsonObject{Members: []*jsonast.JsonObjectMember{
-				{Key: "str", Value: &jsonast.JsonValue{String: pstr("s")}},
+				{Key: "str", Value: &jsonast.JsonValue{String: vstr("s")}},
 			}},
 			other: &jsonast.JsonValue{Object: &jsonast.JsonObject{Members: []*jsonast.JsonObjectMember{
-				{Key: "str2", Value: &jsonast.JsonValue{String: pstr("s")}},
+				{Key: "str2", Value: &jsonast.JsonValue{String: vstr("s")}},
 			}}},
 			expected: &jsonast.JsonValue{Object: &jsonast.JsonObject{
 				Members: []*jsonast.JsonObjectMember{
-					{Key: "str", Value: &jsonast.JsonValue{String: pstr("s")}},
-					{Key: "str2", Value: &jsonast.JsonValue{String: pstr("s")}},
+					{Key: "str", Value: &jsonast.JsonValue{String: vstr("s")}},
+					{Key: "str2", Value: &jsonast.JsonValue{String: vstr("s")}},
 				},
 				OmittableKeys: map[string]struct{}{"str": {}, "str2": {}},
 			}},
@@ -644,14 +644,14 @@ func TestObjectUnionType(t *testing.T) {
 		{
 			name: "object <=> object 2",
 			value: &jsonast.JsonObject{Members: []*jsonast.JsonObjectMember{
-				{Key: "str", Value: &jsonast.JsonValue{String: pstr("s")}},
+				{Key: "str", Value: &jsonast.JsonValue{String: vstr("s")}},
 			}},
 			other: &jsonast.JsonValue{Object: &jsonast.JsonObject{Members: []*jsonast.JsonObjectMember{
-				{Key: "str", Value: &jsonast.JsonValue{String: pstr("s2")}},
+				{Key: "str", Value: &jsonast.JsonValue{String: vstr("s2")}},
 			}}},
 			expected: &jsonast.JsonValue{Object: &jsonast.JsonObject{
 				Members: []*jsonast.JsonObjectMember{
-					{Key: "str", Value: &jsonast.JsonValue{String: pstr("s")}},
+					{Key: "str", Value: &jsonast.JsonValue{String: vstr("s")}},
 				},
 				OmittableKeys: map[string]struct{}{},
 			}},
@@ -659,18 +659,18 @@ func TestObjectUnionType(t *testing.T) {
 		{
 			name: "object <=> object 3",
 			value: &jsonast.JsonObject{Members: []*jsonast.JsonObjectMember{
-				{Key: "str", Value: &jsonast.JsonValue{String: pstr("s")}},
-				{Key: "str2", Value: &jsonast.JsonValue{String: pstr("s2")}},
+				{Key: "str", Value: &jsonast.JsonValue{String: vstr("s")}},
+				{Key: "str2", Value: &jsonast.JsonValue{String: vstr("s2")}},
 			}},
 			other: &jsonast.JsonValue{Object: &jsonast.JsonObject{Members: []*jsonast.JsonObjectMember{
-				{Key: "str2", Value: &jsonast.JsonValue{String: pstr("s2'")}},
-				{Key: "str3", Value: &jsonast.JsonValue{String: pstr("s3")}},
+				{Key: "str2", Value: &jsonast.JsonValue{String: vstr("s2'")}},
+				{Key: "str3", Value: &jsonast.JsonValue{String: vstr("s3")}},
 			}}},
 			expected: &jsonast.JsonValue{Object: &jsonast.JsonObject{
 				Members: []*jsonast.JsonObjectMember{
-					{Key: "str", Value: &jsonast.JsonValue{String: pstr("s")}},
-					{Key: "str2", Value: &jsonast.JsonValue{String: pstr("s2")}},
-					{Key: "str3", Value: &jsonast.JsonValue{String: pstr("s3")}},
+					{Key: "str", Value: &jsonast.JsonValue{String: vstr("s")}},
+					{Key: "str2", Value: &jsonast.JsonValue{String: vstr("s2")}},
+					{Key: "str3", Value: &jsonast.JsonValue{String: vstr("s3")}},
 				},
 				OmittableKeys: map[string]struct{}{"str": {}, "str3": {}},
 			}},
@@ -678,12 +678,12 @@ func TestObjectUnionType(t *testing.T) {
 		{
 			name: "object <=> object 4",
 			value: &jsonast.JsonObject{Members: []*jsonast.JsonObjectMember{
-				{Key: "str", Value: &jsonast.JsonValue{String: pstr("s")}},
+				{Key: "str", Value: &jsonast.JsonValue{String: vstr("s")}},
 			}},
 			other: &jsonast.JsonValue{Object: &jsonast.JsonObject{Members: []*jsonast.JsonObjectMember{}}},
 			expected: &jsonast.JsonValue{Object: &jsonast.JsonObject{
 				Members: []*jsonast.JsonObjectMember{
-					{Key: "str", Value: &jsonast.JsonValue{String: pstr("s")}},
+					{Key: "str", Value: &jsonast.JsonValue{String: vstr("s")}},
 				},
 				OmittableKeys: map[string]struct{}{"str": {}},
 			}},
@@ -692,11 +692,11 @@ func TestObjectUnionType(t *testing.T) {
 			name:  "object <=> object 5",
 			value: &jsonast.JsonObject{Members: []*jsonast.JsonObjectMember{}},
 			other: &jsonast.JsonValue{Object: &jsonast.JsonObject{Members: []*jsonast.JsonObjectMember{
-				{Key: "str2", Value: &jsonast.JsonValue{String: pstr("s")}},
+				{Key: "str2", Value: &jsonast.JsonValue{String: vstr("s")}},
 			}}},
 			expected: &jsonast.JsonValue{Object: &jsonast.JsonObject{
 				Members: []*jsonast.JsonObjectMember{
-					{Key: "str2", Value: &jsonast.JsonValue{String: pstr("s")}},
+					{Key: "str2", Value: &jsonast.JsonValue{String: vstr("s")}},
 				},
 				OmittableKeys: map[string]struct{}{"str2": {}},
 			}},
@@ -704,14 +704,14 @@ func TestObjectUnionType(t *testing.T) {
 		{
 			name: "object <=> array object 1",
 			value: &jsonast.JsonObject{Members: []*jsonast.JsonObjectMember{
-				{Key: "ary", Value: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{{String: pstr("s")}}}}},
+				{Key: "ary", Value: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{{String: vstr("s")}}}}},
 			}},
 			other: &jsonast.JsonValue{Object: &jsonast.JsonObject{Members: []*jsonast.JsonObjectMember{
-				{Key: "ary", Value: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{{String: pstr("s2")}}}}},
+				{Key: "ary", Value: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{{String: vstr("s2")}}}}},
 			}}},
 			expected: &jsonast.JsonValue{Object: &jsonast.JsonObject{
 				Members: []*jsonast.JsonObjectMember{
-					{Key: "ary", Value: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{{String: pstr("s")}}}}},
+					{Key: "ary", Value: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{{String: vstr("s")}}}}},
 				},
 				OmittableKeys: map[string]struct{}{},
 			}},
@@ -719,14 +719,14 @@ func TestObjectUnionType(t *testing.T) {
 		{
 			name: "object <=> array object 2",
 			value: &jsonast.JsonObject{Members: []*jsonast.JsonObjectMember{
-				{Key: "ary", Value: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{{String: pstr("s")}}}}},
+				{Key: "ary", Value: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{{String: vstr("s")}}}}},
 			}},
 			other: &jsonast.JsonValue{Object: &jsonast.JsonObject{Members: []*jsonast.JsonObjectMember{
-				{Key: "ary", Value: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{{Number: pnum("1")}}}}},
+				{Key: "ary", Value: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{{Number: vnum("1")}}}}},
 			}}},
 			expected: &jsonast.JsonValue{Object: &jsonast.JsonObject{
 				Members: []*jsonast.JsonObjectMember{
-					{Key: "ary", Value: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{{Null: pnull("null")}}}}},
+					{Key: "ary", Value: &jsonast.JsonValue{Array: &jsonast.JsonArray{Elements: []*jsonast.JsonValue{{Null: vnull()}}}}},
 				},
 				OmittableKeys: map[string]struct{}{},
 			}},

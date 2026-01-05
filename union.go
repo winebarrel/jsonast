@@ -1,10 +1,7 @@
 package jsonast
 
 var (
-	nullValue = func() *JsonValue {
-		null := JsonNull("null")
-		return &JsonValue{Null: &null}
-	}()
+	nullValue = &JsonValue{Null: &JsonNull{}}
 )
 
 func (v *JsonValue) UnionType(other *JsonValue) *JsonValue {
