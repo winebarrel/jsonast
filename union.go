@@ -5,8 +5,7 @@ var (
 )
 
 func (v *JsonValue) UnionType(other *JsonValue) *JsonValue {
-	value := v.Value().(interface{ UnionType(*JsonValue) *JsonValue })
-	return value.UnionType(other)
+	return v.Value().UnionType(other)
 }
 
 func (v *JsonTrue) UnionType(other *JsonValue) *JsonValue {
