@@ -25,29 +25,21 @@ type JsonTrue struct{}
 func (*JsonTrue) UnmarshalText([]byte) error { return nil }
 
 type JsonNumber struct {
-	text string
+	Text string
 }
 
 func (v *JsonNumber) UnmarshalText(text []byte) error {
-	v.text = string(text)
+	v.Text = string(text)
 	return nil
-}
-
-func (v *JsonNumber) Text() string {
-	return v.text
 }
 
 type JsonString struct {
-	text string
+	Text string
 }
 
 func (v *JsonString) UnmarshalText(text []byte) error {
-	v.text = string(text)
+	v.Text = string(text)
 	return nil
-}
-
-func (v *JsonString) Text() string {
-	return v.text
 }
 
 type JsonValue struct {

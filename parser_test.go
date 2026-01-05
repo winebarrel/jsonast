@@ -642,14 +642,6 @@ func TestValue(t *testing.T) {
 	}
 }
 
-func TestNumberText(t *testing.T) {
-	assert.Equal(t, "1.1", vnum("1.1").Text())
-}
-
-func TestStringText(t *testing.T) {
-	assert.Equal(t, "hello", vstr("hello").Text())
-}
-
 func TestArrayLen(t *testing.T) {
 	tests := []struct {
 		values   []string
