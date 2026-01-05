@@ -12,19 +12,26 @@ var (
 	)
 )
 
-type JsonFalse struct{}
+type JsonFalse struct {
+	nullable
+}
 
 func (*JsonFalse) UnmarshalText([]byte) error { return nil }
 
-type JsonNull struct{}
+type JsonNull struct {
+	notnullable
+}
 
 func (*JsonNull) UnmarshalText([]byte) error { return nil }
 
-type JsonTrue struct{}
+type JsonTrue struct {
+	nullable
+}
 
 func (*JsonTrue) UnmarshalText([]byte) error { return nil }
 
 type JsonNumber struct {
+	nullable
 	Text string
 }
 
@@ -34,6 +41,7 @@ func (v *JsonNumber) UnmarshalText(text []byte) error {
 }
 
 type JsonString struct {
+	nullable
 	Text string
 }
 
@@ -44,6 +52,7 @@ func (v *JsonString) UnmarshalText(text []byte) error {
 
 type ValueType interface {
 	UnionType(*JsonValue) *JsonValue
+	Nullable() bool
 }
 
 type JsonValue struct {
@@ -76,6 +85,16 @@ func (v *JsonValue) Value() ValueType {
 	}
 }
 
+func (v *JsonValue) SameTypeAs(other *JsonValue) bool {
+	return v.IsFalse() && other.IsFalse() ||
+		v.IsNull() && other.IsNull() ||
+		v.IsTrue() && other.IsTrue() ||
+		v.IsObject() && other.IsObject() ||
+		v.IsArray() && other.IsArray() ||
+		v.IsNumber() && other.IsNumber() ||
+		v.IsString() && other.IsString()
+}
+
 func (v *JsonValue) IsFalse() bool {
 	return v.False != nil
 }
@@ -105,6 +124,7 @@ func (v *JsonValue) IsString() bool {
 }
 
 type JsonObject struct {
+	notnullable
 	Members       []*JsonObjectMember `parser:"'{' @@* '}'"`
 	OmittableKeys map[string]struct{}
 }
@@ -115,6 +135,7 @@ type JsonObjectMember struct {
 }
 
 type JsonArray struct {
+	notnullable
 	Elements []*JsonValue `parser:"'[' @@* ']'"`
 }
 
