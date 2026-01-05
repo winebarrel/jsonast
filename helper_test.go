@@ -6,13 +6,13 @@ import (
 
 func vstr(v string) *jsonast.JsonString {
 	s := &jsonast.JsonString{}
-	s.UnmarshalText([]byte(v))
+	s.UnmarshalText([]byte(v)) //nolint:errcheck
 	return s
 }
 
 func vnum(v string) *jsonast.JsonNumber {
 	n := &jsonast.JsonNumber{}
-	n.UnmarshalText([]byte(v))
+	n.UnmarshalText([]byte(v)) //nolint:errcheck
 	return n
 }
 
