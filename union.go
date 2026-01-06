@@ -9,7 +9,7 @@ func (v *JsonValue) UnionType(other *JsonValue) *JsonValue {
 func (v *JsonTrue) UnionType(other *JsonValue) *JsonValue {
 	if other.IsTrue() || other.IsFalse() || other.IsNull() {
 		newval := &JsonTrue{}
-		newval.nullable = v.nullable.Or(other.IsNull() || other.Nullable())
+		newval.nullable = v.Or(other.IsNull() || other.Nullable())
 		return &JsonValue{True: newval}
 	} else {
 		return &JsonValue{Null: &JsonNull{}}
@@ -19,7 +19,7 @@ func (v *JsonTrue) UnionType(other *JsonValue) *JsonValue {
 func (v *JsonFalse) UnionType(other *JsonValue) *JsonValue {
 	if other.IsTrue() || other.IsFalse() || other.IsNull() {
 		newval := &JsonFalse{}
-		newval.nullable = v.nullable.Or(other.IsNull() || other.Nullable())
+		newval.nullable = v.Or(other.IsNull() || other.Nullable())
 		return &JsonValue{False: newval}
 	} else {
 		return &JsonValue{Null: &JsonNull{}}
@@ -61,7 +61,7 @@ func (v *JsonNull) UnionType(other *JsonValue) *JsonValue {
 func (v *JsonNumber) UnionType(other *JsonValue) *JsonValue {
 	if other.IsNumber() || other.IsNull() {
 		newval := &JsonNumber{Text: v.Text}
-		newval.nullable = v.nullable.Or(other.IsNull() || other.Nullable())
+		newval.nullable = v.Or(other.IsNull() || other.Nullable())
 		return &JsonValue{Number: newval}
 	} else {
 		return &JsonValue{Null: &JsonNull{}}
@@ -71,7 +71,7 @@ func (v *JsonNumber) UnionType(other *JsonValue) *JsonValue {
 func (v *JsonString) UnionType(other *JsonValue) *JsonValue {
 	if other.IsString() || other.IsNull() {
 		newval := &JsonString{Text: v.Text}
-		newval.nullable = v.nullable.Or(other.IsNull() || other.Nullable())
+		newval.nullable = v.Or(other.IsNull() || other.Nullable())
 		return &JsonValue{String: newval}
 	} else {
 		return &JsonValue{Null: &JsonNull{}}
