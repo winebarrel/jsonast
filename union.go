@@ -121,7 +121,10 @@ func (v *JsonArray) UnionType(other *JsonValue) *JsonValue {
 
 func (v *JsonObject) UnionType(other *JsonValue) *JsonValue {
 	if other.IsNull() {
-		newval := &JsonObject{Members: v.Members}
+		newval := &JsonObject{
+			Members:       v.Members,
+			OmittableKeys: v.OmittableKeys,
+		}
 		return &JsonValue{Object: newval}
 	} else if !other.IsObject() {
 		return &JsonValue{Null: &JsonNull{}}
