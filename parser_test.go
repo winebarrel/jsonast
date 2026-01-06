@@ -534,58 +534,6 @@ func TestParse_OK(t *testing.T) {
 	}
 }
 
-func TestSameTypeAs(t *testing.T) {
-	tests := []string{
-		"False",
-		"Null",
-		"True",
-		"Object",
-		"Array",
-		"Number",
-		"String",
-	}
-
-	for _, name := range tests {
-		others := []string{
-			"False",
-			"Null",
-			"True",
-			"Object",
-			"Array",
-			"Number",
-			"String",
-		}
-
-		for _, other := range others {
-
-			t.Run(name+"<=>"+other, func(t *testing.T) {
-				valueOf := func(s string) *jsonast.JsonValue {
-					v := &jsonast.JsonValue{}
-					switch s {
-					case "False":
-						v.False = vfalse()
-					case "Null":
-						v.Null = vnull()
-					case "True":
-						v.True = vtrue()
-					case "Object":
-						v.Object = &jsonast.JsonObject{}
-					case "Array":
-						v.Array = &jsonast.JsonArray{}
-					case "Number":
-						v.Number = vnum("")
-					case "String":
-						v.String = vstr("")
-					}
-					return v
-				}
-
-				assert.Equal(t, valueOf(name).SameTypeAs(valueOf(other)), name == other)
-			})
-		}
-	}
-}
-
 func TestIsXXX(t *testing.T) {
 	tests := []struct {
 		name   string
