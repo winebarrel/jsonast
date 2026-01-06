@@ -12,7 +12,7 @@ func vstr(v string) *jsonast.JsonString {
 
 func pstr(v string) *jsonast.JsonString {
 	s := vstr(v)
-	jsonast.NullStr(s)
+	jsonast.MakeStrNullable(s)
 	return s
 }
 
@@ -24,7 +24,7 @@ func vnum(v string) *jsonast.JsonNumber {
 
 func pnum(v string) *jsonast.JsonNumber {
 	n := vnum(v)
-	jsonast.NullNum(n)
+	jsonast.MakeNumNullable(n)
 	return n
 }
 
@@ -34,7 +34,7 @@ func vtrue() *jsonast.JsonTrue {
 
 func ptrue() *jsonast.JsonTrue {
 	t := vtrue()
-	jsonast.NullTrue(t)
+	jsonast.MakeTrueNullable(t)
 	return t
 }
 
@@ -44,7 +44,7 @@ func vfalse() *jsonast.JsonFalse {
 
 func pfalse() *jsonast.JsonFalse {
 	f := vfalse()
-	jsonast.NullFalse(f)
+	jsonast.MakeFalseNullable(f)
 	return f
 }
 

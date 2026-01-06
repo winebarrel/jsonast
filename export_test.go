@@ -1,17 +1,17 @@
 package jsonast
 
-func NullStr(v *JsonString) {
+func MakeStrNullable(v *JsonString) {
 	v.nullable = true
 }
 
-func NullNum(v *JsonNumber) {
+func MakeNumNullable(v *JsonNumber) {
 	v.nullable = true
 }
 
-func NullTrue(v *JsonTrue) {
+func MakeTrueNullable(v *JsonTrue) {
 	v.nullable = true
 }
 
-func NullFalse(v *JsonFalse) {
+func MakeFalseNullable(v *JsonFalse) {
 	v.nullable = true
 }
