@@ -1,52 +1,91 @@
 package jsonast
 
-var (
-	nullValue = &JsonValue{Null: &JsonNull{}}
-)
+import "fmt"
 
 func (v *JsonValue) UnionType(other *JsonValue) *JsonValue {
 	return v.Value().UnionType(other)
 }
 
 func (v *JsonTrue) UnionType(other *JsonValue) *JsonValue {
-	if other.IsTrue() || other.IsFalse() {
-		return &JsonValue{True: v}
+	if other.IsTrue() || other.IsFalse() || other.IsNull() {
+		newval := &JsonTrue{}
+		newval.nullable = v.Or(other.IsNull() || other.Nullable())
+		return &JsonValue{True: newval}
 	} else {
-		return nullValue
+		return &JsonValue{Null: &JsonNull{}}
 	}
 }
 
 func (v *JsonFalse) UnionType(other *JsonValue) *JsonValue {
-	if other.IsTrue() || other.IsFalse() {
-		return &JsonValue{False: v}
+	if other.IsTrue() || other.IsFalse() || other.IsNull() {
+		newval := &JsonFalse{}
+		newval.nullable = v.Or(other.IsNull() || other.Nullable())
+		return &JsonValue{False: newval}
 	} else {
-		return nullValue
+		return &JsonValue{Null: &JsonNull{}}
 	}
 }
 
 func (v *JsonNull) UnionType(other *JsonValue) *JsonValue {
-	return &JsonValue{Null: v}
+	switch o := other.Value().(type) {
+	case *JsonFalse:
+		newval := &JsonFalse{}
+		newval.nullable = true
+		return &JsonValue{False: newval}
+	case *JsonTrue:
+		newval := &JsonTrue{}
+		newval.nullable = true
+		return &JsonValue{True: newval}
+	case *JsonObject:
+		newval := &JsonObject{Members: o.Members}
+		return &JsonValue{Object: newval}
+	case *JsonArray:
+		newval := &JsonArray{Elements: o.Elements}
+		return &JsonValue{Array: newval}
+	case *JsonNumber:
+		newval := &JsonNumber{Text: o.Text}
+		newval.nullable = true
+		return &JsonValue{Number: newval}
+	case *JsonString:
+		newval := &JsonString{Text: o.Text}
+		newval.nullable = true
+		return &JsonValue{String: newval}
+	case *JsonNull:
+		newval := &JsonNull{}
+		return &JsonValue{Null: newval}
+	default:
+		panic(fmt.Sprintf("unexpected type: %+v", o))
+	}
 }
 
 func (v *JsonNumber) UnionType(other *JsonValue) *JsonValue {
-	if other.IsNumber() {
-		return &JsonValue{Number: v}
+	if other.IsNumber() || other.IsNull() {
+		newval := &JsonNumber{Text: v.Text}
+		newval.nullable = v.Or(other.IsNull() || other.Nullable())
+		return &JsonValue{Number: newval}
 	} else {
-		return nullValue
+		return &JsonValue{Null: &JsonNull{}}
 	}
 }
 
 func (v *JsonString) UnionType(other *JsonValue) *JsonValue {
-	if other.IsString() {
-		return &JsonValue{String: v}
+	if other.IsString() || other.IsNull() {
+		newval := &JsonString{Text: v.Text}
+		newval.nullable = v.Or(other.IsNull() || other.Nullable())
+		return &JsonValue{String: newval}
 	} else {
-		return nullValue
+		return &JsonValue{Null: &JsonNull{}}
 	}
 }
 
 func (v *JsonArray) UnionType(other *JsonValue) *JsonValue {
-	if other != nil && !other.IsArray() {
-		return nullValue
+	if other != nil {
+		if other.IsNull() {
+			newval := &JsonArray{Elements: v.Elements}
+			return &JsonValue{Array: newval}
+		} else if !other.IsArray() {
+			return &JsonValue{Null: &JsonNull{}}
+		}
 	}
 
 	if other == nil {
@@ -64,19 +103,31 @@ func (v *JsonArray) UnionType(other *JsonValue) *JsonValue {
 	elems = elems[1:]
 
 	for _, e := range elems {
-		if union.IsNull() {
+		next := union.UnionType(e)
+		same := union.SameTypeAs(next)
+		union = next
+
+		if next.IsNull() && !same {
 			break
 		}
-
-		union = union.UnionType(e)
 	}
 
-	return &JsonValue{Array: &JsonArray{Elements: []*JsonValue{union}}}
+	return &JsonValue{
+		Array: &JsonArray{
+			Elements: []*JsonValue{union},
+		},
+	}
 }
 
 func (v *JsonObject) UnionType(other *JsonValue) *JsonValue {
-	if !other.IsObject() {
-		return nullValue
+	if other.IsNull() {
+		newval := &JsonObject{
+			Members:       v.Members,
+			OmittableKeys: v.OmittableKeys,
+		}
+		return &JsonValue{Object: newval}
+	} else if !other.IsObject() {
+		return &JsonValue{Null: &JsonNull{}}
 	}
 
 	type entry struct {
