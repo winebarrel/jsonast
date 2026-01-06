@@ -15,3 +15,7 @@ func MakeTrueNullable(v *JsonTrue) {
 func MakeFalseNullable(v *JsonFalse) {
 	v.nullable = true
 }
+
+func MakeNullAny(v *JsonNull) {
+	v.any = true
+}

@@ -51,3 +51,9 @@ func pfalse() *jsonast.JsonFalse {
 func vnull() *jsonast.JsonNull {
 	return &jsonast.JsonNull{}
 }
+
+func anynull() *jsonast.JsonNull {
+	null := &jsonast.JsonNull{}
+	jsonast.MakeNullAny(null)
+	return null
+}

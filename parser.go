@@ -20,6 +20,7 @@ func (*JsonFalse) UnmarshalText([]byte) error { return nil }
 
 type JsonNull struct {
 	notnullable
+	any bool
 }
 
 func (*JsonNull) UnmarshalText([]byte) error { return nil }
@@ -83,16 +84,6 @@ func (v *JsonValue) Value() ValueType {
 	} else {
 		return nil
 	}
-}
-
-func (v *JsonValue) SameTypeAs(other *JsonValue) bool {
-	return v.IsFalse() && other.IsFalse() ||
-		v.IsNull() && other.IsNull() ||
-		v.IsTrue() && other.IsTrue() ||
-		v.IsObject() && other.IsObject() ||
-		v.IsArray() && other.IsArray() ||
-		v.IsNumber() && other.IsNumber() ||
-		v.IsString() && other.IsString()
 }
 
 func (v *JsonValue) IsFalse() bool {
